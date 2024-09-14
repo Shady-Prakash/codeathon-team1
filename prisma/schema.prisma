@@ -180,6 +180,21 @@ model Address {
   @@index([donorId])
 }
 
+model Campaign {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
+  description String? @db.Text
+  imageUrl    String? @db.Text
+  fund        Float?
+  isPublished Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@fulltext([title])
+}
+
 // model Member {
 //   id        String  @id @default(uuid())
 //   firstName String
