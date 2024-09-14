@@ -26,4 +26,31 @@ export const campaigns = [
       "https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Education",
   },
+  {
+    id: "4",
+    name: "Protect Our Oceans",
+    description:
+      "Join our efforts to combat ocean pollution and protect marine life. Our oceans are facing critical threats from plastic waste, overfishing, and climate change. This campaign is dedicated to reducing ocean pollution by supporting cleanup initiatives, promoting sustainable fishing practices, and advocating for stronger environmental policies. Funds will be used for beach cleanups, marine wildlife rescue operations, and public education campaigns to raise awareness about the impact of ocean pollution. Your support will help ensure that our oceans remain healthy and vibrant for future generations.",
+    image:
+      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "Environment",
+  },
+  {
+    id: "5",
+    name: "Food Security for Families",
+    description:
+      "Support our mission to provide essential food resources to families in need. Food insecurity affects millions of families worldwide, making it difficult for them to access nutritious meals. This campaign focuses on distributing food supplies, supporting local food banks, and implementing community-based programs to improve food security. Funds will be directed towards purchasing and distributing food, setting up food pantries, and providing educational workshops on nutrition and cooking. By contributing, you will help ensure that families have the resources they need to stay healthy and thrive.",
+    image:
+      "https://images.unsplash.com/photo-1578496780896-7081cc23c111?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "Humanitarian",
+  },
+  {
+    id: "6",
+    name: "Scholarships for Future Leaders",
+    description:
+      "Help us provide scholarships to students who demonstrate exceptional promise but lack the financial resources to pursue higher education. This campaign aims to support talented individuals from underprivileged backgrounds by funding scholarships for college and vocational training. Funds will be used to cover tuition fees, educational materials, and living expenses for recipients. By investing in these students' education, you will help shape the leaders of tomorrow and create opportunities for them to succeed in their chosen fields.",
+    image:
+      "https://plus.unsplash.com/premium_photo-1682284079685-657fb4f33de5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "Education",
+  },
 ];
