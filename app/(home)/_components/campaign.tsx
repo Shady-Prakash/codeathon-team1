@@ -19,24 +19,22 @@ const CampaignCard: React.FC<CampaignProps> = ({
   imageSrc,
   category,
 }) => {
-  // Truncate the description to a specific length with ellipsis
-  const truncatedBody = body.length > 100 ? `${body.slice(0, 100)}...` : body;
+  const truncatedBody = body.length > 300 ? `${body.slice(0, 300)}...` : body;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl">
       <div>
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-64 object-cover rounded-md mb-4" // Increased height
+          className="w-full h-64 object-cover rounded-md mb-4"
         />
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-gray-600 mt-2 line-clamp-3">{truncatedBody}</p>{" "}
-        {/* Truncate description */}
+        <p className="text-gray-600 mt-2 line-clamp-3">{truncatedBody}</p>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 text-center">
         <Link href={`/campaigns/${id}`}>
-          <Button className="bg-[#059669] hover:bg-[#037f57] text-white w-full">
+          <Button className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full">
             Donate now
           </Button>
         </Link>
@@ -54,9 +52,9 @@ const Campaigns: React.FC = () => {
   );
 
   const filteredCampaigns = campaigns.filter((campaign) => {
-    const matchesSearch =
-      campaign.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      campaign.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = campaign.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     const matchesCategory = category === "" || campaign.category === category;
     return matchesSearch && matchesCategory;
   });
@@ -71,17 +69,17 @@ const Campaigns: React.FC = () => {
       </div>
 
       <div className="p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between mb-6 w-full space-y-4 sm:space-y-0 sm:space-x-4">
-          <div className="relative flex-1">
+        <div className="flex flex-col sm:flex-row sm:justify-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="relative flex-1 max-w-xs mx-auto">
             <input
               type="text"
-              placeholder="Search by title or description"
+              placeholder="Search by title"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border p-3 rounded-md w-full pl-12 focus:border-[#059669] focus:ring-[#059669] transition-all"
+              className="border p-2 rounded-md w-full text-sm pl-10 focus:border-[#059669] focus:ring-[#059669] transition-all"
             />
             <svg
-              className="absolute left-4 top-3.5 h-5 w-5 text-gray-400"
+              className="absolute left-3 top-3 h-5 w-5 text-gray-400"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -99,7 +97,7 @@ const Campaigns: React.FC = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="border p-3 rounded-md w-52 focus:border-[#059669] focus:ring-[#059669] transition-all"
+            className="border p-2 rounded-md w-48 text-sm focus:border-[#059669] focus:ring-[#059669] transition-all"
           >
             <option value="">All Categories</option>
             {uniqueCategories.map((cat) => (
