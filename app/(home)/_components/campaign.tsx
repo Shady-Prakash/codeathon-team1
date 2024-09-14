@@ -1,7 +1,5 @@
 'use client';
-import React from 'react';
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Dialog } from '@radix-ui/react-dialog';
 import { DialogTrigger } from '../../../components/ui/dialog';
@@ -10,6 +8,7 @@ import { DialogHeader } from '../../../components/ui/dialog';
 import { DialogTitle } from '../../../components/ui/dialog';
 import { DialogFooter } from '../../../components/ui/dialog';
 import Link from 'next/link';
+import { campaigns } from '../../data/campaigns';
 
 type CampaignProps = {
   title: string;
@@ -29,7 +28,7 @@ const CampaignCard: React.FC<CampaignProps> = ({
       <img
         src={imageSrc}
         alt={title}
-        className='w-full h-40 object-cover rounded-md mb-4'
+        className='w-full h-[60vh] object-cover rounded-md mb-4' // 60vh is approximately 50% larger than the previous h-40
       />
 
       <div>
@@ -48,52 +47,9 @@ const CampaignCard: React.FC<CampaignProps> = ({
 const Campaigns: React.FC = () => {
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const campaigns = [
-    {
-      title: 'Gaza Crisis Appeal',
-      body: 'People urgently need clean water, food and medical care. Help us get this critical aid to those in desperate need.',
-      link: '/donate-gaza',
-      imageSrc: '/images/gaza-crisis.jpg',
-    },
-    {
-      title: 'Support people in crisis',
-      body: 'People need us right now, and we need you. With your support we can provide vital help when disaster strikes.',
-      link: '/donate-crisis',
-      imageSrc: '/images/crisis-support.jpg',
-    },
-    {
-      title: 'Campaign 3',
-      body: 'This is the body text for Campaign 3. Help us by donating today.',
-      link: '/donate-campaign3',
-      imageSrc: '/images/campaign3.jpg',
-    },
-    {
-      title: 'Campaign 4',
-      body: 'This is the body text for Campaign 4. Your donations make a difference.',
-      link: '/donate-campaign4',
-      imageSrc: '/images/campaign4.jpg',
-    },
-    {
-      title: 'Campaign 5',
-      body: 'Help Campaign 5 provide essential aid to those in need.',
-      link: '/donate-campaign5',
-      imageSrc: '/images/campaign5.jpg',
-    },
-    {
-      title: 'Campaign 6',
-      body: 'Support Campaign 6 to offer relief to affected communities.',
-      link: '/donate-campaign6',
-      imageSrc: '/images/campaign6.jpg',
-    },
-  ];
-
   return (
     <div>
-      {/* Green Background Section */}
-      {/* Option 1: Using Tailwind's custom color class */}
       <div className='bg-[#059669] text-white text-center py-8'>
-        {/* Option 2: Using inline style */}
-        {/* <div style={{ backgroundColor: '#059669' }} className="text-white text-center py-8"> */}
         <h1 className='text-3xl font-bold'>Donate to The Big Alliance</h1>
         <p className='text-lg mt-2'>
           People in crisis need your help. Your donation will change lives.
@@ -122,13 +78,13 @@ const Campaigns: React.FC = () => {
         </div>
 
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6'>
-          {campaigns.map((campaign, index) => (
+          {campaigns.map((campaign) => (
             <CampaignCard
-              key={index}
-              title={campaign.title}
-              body={campaign.body}
-              link={campaign.link}
-              imageSrc={campaign.imageSrc}
+              key={campaign.id}
+              title={campaign.name}
+              body={campaign.description}
+              link='#'
+              imageSrc={campaign.image}
             />
           ))}
         </div>
