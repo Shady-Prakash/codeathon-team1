@@ -1,13 +1,12 @@
-import NavBar from "./_components/navbar"
-import Slider from "./_components/slider"
+import NavBar from "./_components/navbar";
+import Slider from "./_components/slider";
 
 const page = () => {
   return (
     <>
-      <NavBar/>
-      <Slider/>
+      <Slider />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
