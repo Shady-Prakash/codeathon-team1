@@ -40,8 +40,9 @@ const ChapterIdPage = async({
   const requiredFields = [
     campaign.title,
     campaign.description,
-    campaign.imageUrl,
-    campaign.isPublished,
+    // campaign.imageUrl,
+    campaign.fund,
+    // campaign.isPublished,
 
   ];
 
@@ -51,6 +52,7 @@ const ChapterIdPage = async({
   const completionText = `(${completedFields}/${totalFields})`;
 
   const isComplete = requiredFields.every(Boolean);
+  console.log(isComplete)
 
   return ( 
     <>
