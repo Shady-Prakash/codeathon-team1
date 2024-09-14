@@ -36,8 +36,8 @@ const NavBar = () => {
   }, [prevScrollpos]);
 
   const menus = [
-    { title: "Home", path: "/home" },
-    { title: "Register New Donor Company", path: "/register" },
+    { title: "Home", path: "/" },
+    { title: "Register", path: "/register" },
   ];
 
   const clickHandler = () => {

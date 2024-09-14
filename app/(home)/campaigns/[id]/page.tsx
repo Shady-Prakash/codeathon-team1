@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
-import { campaigns } from "../../data/campaigns";
+import { campaigns } from "../../../data/campaigns";
 
 interface Campaign {
   id: string;
@@ -70,12 +70,14 @@ export default function CampaignDetails() {
             <span className="text-gray-800 text-lg">Donate as Company</span>
           </label>
         </div>
-        <button
-          type="button"
-          className="w-full py-4 bg-[#37AB87] text-white font-bold rounded-lg shadow-lg transition duration-300 hover:bg-[#2F8D6E] focus:outline-none focus:ring-4 focus:ring-[#37AB87]"
-        >
-          Donate Now
-        </button>
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full"
+          >
+            Donate Now
+          </button>
+        </div>
       </section>
     </div>
   );
