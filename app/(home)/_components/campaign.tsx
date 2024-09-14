@@ -11,16 +11,16 @@ import Link from 'next/link';
 import { campaigns } from '../../data/campaigns';
 
 type CampaignProps = {
+  id: string;
   title: string;
   body: string;
-  link: string;
   imageSrc: string;
 };
 
 const CampaignCard: React.FC<CampaignProps> = ({
+  id,
   title,
   body,
-  link,
   imageSrc,
 }) => {
   return (
@@ -36,7 +36,10 @@ const CampaignCard: React.FC<CampaignProps> = ({
         <p className='text-gray-600 mt-2'>{body}</p>
       </div>
       <div className='mt-4'>
-        <Link href={link} className='text-green-600 hover:underline'>
+        <Link
+          href={`/campaigns/${id}`}
+          className="text-green-600 hover:underline"
+        >
           Donate now
         </Link>
       </div>
@@ -84,7 +87,7 @@ const Campaigns: React.FC = () => {
               key={campaign.id}
               title={campaign.name}
               body={campaign.description}
-              link='#'
+              id={campaign.id}
               imageSrc={campaign.image}
             />
           ))}
