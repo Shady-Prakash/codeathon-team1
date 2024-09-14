@@ -11,24 +11,24 @@ import Link from 'next/link';
 import { campaigns } from '../../data/campaigns';
 
 type CampaignProps = {
+  id: string;
   title: string;
   body: string;
-  link: string;
   imageSrc: string;
 };
 
 const CampaignCard: React.FC<CampaignProps> = ({
+  id,
   title,
   body,
-  link,
   imageSrc,
 }) => {
   return (
-    <div className='border-2 border-gray-300 rounded-lg p-4 w-full flex flex-col justify-between'>
+    <div className='p-4 w-full flex flex-col justify-between'>
       <img
         src={imageSrc}
         alt={title}
-        className='w-full h-[60vh] object-cover rounded-md mb-4' // 60vh is approximately 50% larger than the previous h-40
+        className='w-full h-[60vh] object-cover rounded-md mb-4'
       />
 
       <div>
@@ -36,7 +36,10 @@ const CampaignCard: React.FC<CampaignProps> = ({
         <p className='text-gray-600 mt-2'>{body}</p>
       </div>
       <div className='mt-4'>
-        <Link href={link} className='text-green-600 hover:underline'>
+        <Link
+          href={`/campaigns/${id}`}
+          className="text-green-600 hover:underline"
+        >
           Donate now
         </Link>
       </div>
@@ -49,19 +52,20 @@ const Campaigns: React.FC = () => {
 
   return (
     <div>
-      <div className='bg-[#059669] text-white text-center py-8'>
+      <div className='bg-[#059669] text-white text-center py-1'>
         <h1 className='text-3xl font-bold'>Donate to The Big Alliance</h1>
         <p className='text-lg mt-2'>
           People in crisis need your help. Your donation will change lives.
         </p>
       </div>
-
       <div className='p-4'>
-        <div className='flex justify-between items-center mb-4'>
-          <h2 className='text-xl font-bold'>Campaigns</h2>
+        <div className='flex flex-col items-center mb-4'>
+          <h2 className='text-xl font-bold mb-2'>Campaigns</h2>
           <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
             <DialogTrigger asChild>
-              <Button variant='outline'>Filter</Button>
+              <Button variant='outline' className='self-end'>
+                Filter
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -83,7 +87,7 @@ const Campaigns: React.FC = () => {
               key={campaign.id}
               title={campaign.name}
               body={campaign.description}
-              link='#'
+              id={campaign.id}
               imageSrc={campaign.image}
             />
           ))}
