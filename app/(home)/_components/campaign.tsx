@@ -38,8 +38,7 @@ const CampaignCard: React.FC<CampaignProps> = ({
       <div className='mt-4'>
         <Link
           href={`/campaigns/${id}`}
-          className="text-green-600 hover:underline"
-        >
+          className='text-green-600 hover:underline'>
           Donate now
         </Link>
       </div>
@@ -52,7 +51,7 @@ const Campaigns: React.FC = () => {
 
   return (
     <div>
-      <div className='bg-[#059669] text-white text-center py-1'>
+      <div className='bg-[#059669] text-white text-center py-10'>
         <h1 className='text-3xl font-bold'>Donate to The Big Alliance</h1>
         <p className='text-lg mt-2'>
           People in crisis need your help. Your donation will change lives.
