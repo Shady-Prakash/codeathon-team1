@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
-import { campaigns } from "../../data/campaigns";
+import { campaigns } from "../../../data/campaigns";
 
 interface Campaign {
   id: string;
