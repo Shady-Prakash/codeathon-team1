@@ -61,13 +61,12 @@ const Campaigns: React.FC = () => {
 
   return (
     <div>
-      <div className="bg-[#059669] text-white text-center py-8">
-        <h1 className="text-4xl font-bold mb-2">Donate to The Big Alliance</h1>
-        <p className="text-lg">
+      <div className='bg-[#059669] text-white text-center py-10'>
+        <h1 className='text-3xl font-bold'>Donate to The Big Alliance</h1>
+        <p className='text-lg mt-2'>
           People in crisis need your help. Your donation will change lives.
         </p>
       </div>
-
       <div className="p-6">
         <div className="flex flex-col sm:flex-row sm:justify-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
           <div className="relative flex-1 max-w-xs mx-auto">
