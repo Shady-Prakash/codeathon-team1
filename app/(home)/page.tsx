@@ -1,10 +1,11 @@
-import NavBar from "./_components/navbar";
-import Slider from "./_components/slider";
+import Slider from './_components/slider';
+import Campaign from './_components/campaign';
 
 const page = () => {
   return (
     <>
       <Slider />
+      <Campaign />
     </>
   );
 };
