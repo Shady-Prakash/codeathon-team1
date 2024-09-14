@@ -1,12 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "../../../components/ui/button";
-import { Dialog } from "@radix-ui/react-dialog";
-import { DialogTrigger } from "../../../components/ui/dialog";
-import { DialogContent } from "../../../components/ui/dialog";
-import { DialogHeader } from "../../../components/ui/dialog";
-import { DialogTitle } from "../../../components/ui/dialog";
-import { DialogFooter } from "../../../components/ui/dialog";
 import Link from "next/link";
 import { campaigns } from "../../data/campaigns";
 
@@ -26,22 +20,21 @@ const CampaignCard: React.FC<CampaignProps> = ({
   category,
 }) => {
   return (
-    <div className="p-4 w-full flex flex-col justify-between">
-      <img
-        src={imageSrc}
-        alt={title}
-        className="w-full h-[60vh] object-cover rounded-md mb-4"
-      />
+    <div className="p-6 bg-white rounded-lg shadow-md flex flex-col justify-between transition-transform transform hover:scale-102">
       <div>
-        <h3 className="text-lg font-semibold">{title}</h3>
+        <img
+          src={imageSrc}
+          alt={title}
+          className="w-full h-48 object-cover rounded-md mb-4"
+        />
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         <p className="text-gray-600 mt-2">{body}</p>
       </div>
       <div className="mt-4">
-        <Link
-          href={`/campaigns/${id}`}
-          className="text-green-600 hover:underline"
-        >
-          Donate now
+        <Link href={`/campaigns/${id}`}>
+          <Button className="bg-[#059669] hover:bg-[#037f57] text-white w-full">
+            Donate now
+          </Button>
         </Link>
       </div>
     </div>
@@ -49,15 +42,12 @@ const CampaignCard: React.FC<CampaignProps> = ({
 };
 
 const Campaigns: React.FC = () => {
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search
-  const [category, setCategory] = useState(""); // State for category filter
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("");
 
   const uniqueCategories = Array.from(
     new Set(campaigns.map((campaign) => campaign.category))
   );
-
 
   const filteredCampaigns = campaigns.filter((campaign) => {
     const matchesSearch =
@@ -69,68 +59,71 @@ const Campaigns: React.FC = () => {
 
   return (
     <div>
-      <div className="bg-[#059669] text-white text-center py-1">
-        <h1 className="text-3xl font-bold">Donate to The Big Alliance</h1>
-        <p className="text-lg mt-2">
+      <div className="bg-[#059669] text-white text-center py-8">
+        <h1 className="text-4xl font-bold mb-2">Donate to The Big Alliance</h1>
+        <p className="text-lg">
           People in crisis need your help. Your donation will change lives.
         </p>
       </div>
-      <div className="p-4">
-        <div className="flex flex-col items-center mb-4">
-          <h2 className="text-xl font-bold mb-2">Campaigns</h2>
-          <div className="flex space-x-4 mb-4">
+
+      <div className="p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between mb-6 w-full space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="relative flex-1">
             <input
               type="text"
               placeholder="Search by title or description"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border p-2 rounded-md w-60"
+              className="border p-3 rounded-md w-full pl-12 focus:border-[#059669] focus:ring-[#059669] transition-all"
             />
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="border p-2 rounded-md w-40"
+            <svg
+              className="absolute left-4 top-3.5 h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <option value="">All Categories</option>
-              {uniqueCategories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 116.15 13.65z"
+              />
+            </svg>
           </div>
 
-          <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="self-end">
-                Filter
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Filter Campaigns</DialogTitle>
-              </DialogHeader>
-              <div>
-                <p>Additional filter options can be added here</p>
-              </div>
-              <DialogFooter>
-                <Button onClick={() => setFilterOpen(false)}>Apply</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="border p-3 rounded-md w-52 focus:border-[#059669] focus:ring-[#059669] transition-all"
+          >
+            <option value="">All Categories</option>
+            {uniqueCategories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {filteredCampaigns.map((campaign) => (
-            <CampaignCard
-              key={campaign.id}
-              title={campaign.name}
-              body={campaign.description}
-              id={campaign.id}
-              imageSrc={campaign.image}
-              category={campaign.category}
-            />
-          ))}
-        </div>
+
+        {filteredCampaigns.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {filteredCampaigns.map((campaign) => (
+              <CampaignCard
+                key={campaign.id}
+                title={campaign.name}
+                body={campaign.description}
+                id={campaign.id}
+                imageSrc={campaign.image}
+                category={campaign.category}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-600 mt-10">
+            No campaigns found. Try adjusting your filters.
+          </p>
+        )}
       </div>
     </div>
   );
