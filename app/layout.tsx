@@ -1,31 +1,33 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
-import { ToastProvider } from '@/components/providers/toaster-provider'
-import { ConfettiProvider } from '@/components/providers/confetti-provider'
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ToastProvider } from "@/components/providers/toaster-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
+import NavBar from "./(home)/_components/navbar";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'BIG Alliance',
-  description: 'UK based Charity app',
-}
+  title: "BIG Alliance",
+  description: "UK based Charity app",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <ConfettiProvider/>
-          <ToastProvider/>
+          <ConfettiProvider />
+          <ToastProvider />
+          <NavBar />
           {children}
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }
