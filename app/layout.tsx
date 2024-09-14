@@ -24,7 +24,6 @@ export default function RootLayout({
         <body className={inter.className}>
           <ConfettiProvider />
           <ToastProvider />
-          <NavBar />
           {children}
         </body>
       </html>
