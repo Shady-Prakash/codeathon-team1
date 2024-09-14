@@ -19,16 +19,20 @@ const CampaignCard: React.FC<CampaignProps> = ({
   imageSrc,
   category,
 }) => {
+  // Truncate the description to a specific length with ellipsis
+  const truncatedBody = body.length > 100 ? `${body.slice(0, 100)}...` : body;
+
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md flex flex-col justify-between transition-transform transform hover:scale-102">
+    <div className="p-6 bg-white rounded-lg shadow-lg flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl">
       <div>
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-48 object-cover rounded-md mb-4"
+          className="w-full h-64 object-cover rounded-md mb-4" // Increased height
         />
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-gray-600 mt-2">{body}</p>
+        <p className="text-gray-600 mt-2 line-clamp-3">{truncatedBody}</p>{" "}
+        {/* Truncate description */}
       </div>
       <div className="mt-4">
         <Link href={`/campaigns/${id}`}>
