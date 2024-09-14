@@ -11,7 +11,7 @@ import { Actions } from "./actions";
 
 const NavBar = () => {
   const [state, setState] = useState(false);
-  const [prevScrollpos, setPrevScrollpos] = useState(window.scrollY);
+  const [prevScrollpos, setPrevScrollpos] = useState(0);
   const [top, setTop] = useState(0);
   const router = useRouter();
   const { userId } = useAuth();
