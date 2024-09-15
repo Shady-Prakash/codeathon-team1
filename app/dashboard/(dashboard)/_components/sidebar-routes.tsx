@@ -7,12 +7,18 @@ import {
   List,
   UserCog,
   Building2,
+  ShieldQuestion,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 
 const guestRoutes = [
+  {
+    icon: Building2,
+    label: "Verified Companies",
+    href: "/dashboard/verified-companies",
+  },
   {
     icon: Layout,
     label: "Dashboard",
@@ -32,9 +38,9 @@ const adminRoutes = [
     href: "/dashboard/admin/campaigns",
   },
   {
-    icon: Building2,
-    label: "Verified Companies",
-    href: "/dashboard/admin/companies",
+    icon: ShieldQuestion,
+    label: "UnVerified Companies",
+    href: "/dashboard/admin/unverified-companies",
   },
   {
     icon: BarChart,

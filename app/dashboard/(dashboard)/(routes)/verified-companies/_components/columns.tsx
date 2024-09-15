@@ -19,8 +19,4 @@ export const columns = [
     accessorKey: "contactEmail",
     header: "Contact Email",
   },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
 ];

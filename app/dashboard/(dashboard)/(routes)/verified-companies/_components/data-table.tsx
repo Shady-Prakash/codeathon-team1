@@ -28,11 +28,10 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
-  data = [], // Default to empty array
+  data = [],
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
-  // Initialize table
   const table = useReactTable({
     data,
     columns,
@@ -45,7 +44,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  // Debugging: Log the table object
   React.useEffect(() => {
     console.log("Table object:", table);
     if (table) {
@@ -53,7 +51,6 @@ export function DataTable<TData, TValue>({
     }
   }, [table]);
 
-  // Ensure headerGroups is defined
   const headerGroups = table?.getHeaderGroups() || [];
 
   return (
