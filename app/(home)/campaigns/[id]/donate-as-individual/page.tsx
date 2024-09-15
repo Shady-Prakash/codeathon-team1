@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaPaypal } from "react-icons/fa";
 
 export default function DonateAsIndividual() {
@@ -9,20 +9,23 @@ export default function DonateAsIndividual() {
   const [donorType, setDonorType] = useState<string>("anonymous");
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const campaignName = searchParams.get("campaignName") || "";
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (agreed) {
         // Redirect to PayPal
-        window.location.href =
-          "https://www.paypal.com/donate?business=your-paypal-business-email"; // Replace with actual PayPal donation URL
+        window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
+          isRecurring ? "RECURRING" : "ONCE"
+        }`; // Replace with actual PayPal donation URL
       } else {
         alert("You must agree to the disclaimer.");
       }
     },
-    [agreed]
+    [agreed, isRecurring]
   );
 
   return (
@@ -31,6 +34,20 @@ export default function DonateAsIndividual() {
         Donate as Individual
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="campaignName" className="block text-gray-700">
+            Campaign Name
+          </label>
+          <input
+            type="text"
+            id="campaignName"
+            value={campaignName}
+            readOnly
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100"
+            aria-live="polite"
+          />
+        </div>
+
         <fieldset className="border border-gray-300 rounded-md p-4">
           <legend className="text-gray-700 font-medium">Donation Type</legend>
           <div className="flex items-center mt-2">

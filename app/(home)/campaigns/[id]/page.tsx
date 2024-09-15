@@ -39,21 +39,23 @@ export default function CampaignDetails() {
 
   const toggleReadMore = () => setIsReadMore(!isReadMore);
 
-  const handleDonateNow = () => {
-    if (donationType) {
-      router.push(
-        `/campaigns/${id}/${
-          donationType === "individual"
-            ? "donate-as-individual"
-            : `donate-as-company?campaignName=${encodeURIComponent(
-                campaign.name
-              )}`
-        }`
-      );
-    } else {
-      alert("Please select a donation type.");
-    }
-  };
+ const handleDonateNow = () => {
+   if (donationType) {
+     router.push(
+       `/campaigns/${id}/${
+         donationType === "individual"
+           ? `donate-as-individual?campaignName=${encodeURIComponent(
+               campaign.name
+             )}`
+           : `donate-as-company?campaignName=${encodeURIComponent(
+               campaign.name
+             )}`
+       }`
+     );
+   } else {
+     alert("Please select a donation type.");
+   }
+ };
 
   if (!campaign)
     return (
