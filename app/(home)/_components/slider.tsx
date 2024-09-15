@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
@@ -71,45 +69,6 @@ const Slider = memo(() => {
             </CarouselItem>
           ))}
         </CarouselContent>
-
-        <CarouselPrevious
-          aria-label="Previous slide"
-          className="absolute left-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-70 hover:bg-opacity-90 p-3 rounded-full cursor-pointer shadow-xl transition-colors duration-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </CarouselPrevious>
-        <CarouselNext
-          aria-label="Next slide"
-          className="absolute right-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-70 hover:bg-opacity-90 p-3 rounded-full cursor-pointer shadow-xl transition-colors duration-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </CarouselNext>
 
         <div className="absolute bottom-4 w-full flex justify-center items-center">
           {Array.from({ length: count }).map((_, index) => (
