@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import Link from "next/link";
 import { campaigns } from "../../data/campaigns";
@@ -22,19 +22,19 @@ const CampaignCard: React.FC<CampaignProps> = ({
   const truncatedBody = body.length > 300 ? `${body.slice(0, 300)}...` : body;
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl">
-      <div>
-        <img
-          src={imageSrc}
-          alt={title}
-          className="w-full h-64 object-cover rounded-md mb-4"
-        />
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-gray-600 mt-2 line-clamp-3">{truncatedBody}</p>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
+      <img
+        src={imageSrc}
+        alt={title}
+        className="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div className="p-4 flex flex-col">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-700 text-sm flex-1">{truncatedBody}</p>
       </div>
-      <div className="mt-4 text-center">
+      <div className="p-4 border-t border-gray-200 text-center">
         <Link href={`/campaigns/${id}`}>
-          <Button className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full">
+          <Button className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full">
             Donate now
           </Button>
         </Link>
@@ -46,6 +46,8 @@ const CampaignCard: React.FC<CampaignProps> = ({
 const Campaigns: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const campaignsPerPage = 3; // Adjust this number as needed
 
   const uniqueCategories = Array.from(
     new Set(campaigns.map((campaign) => campaign.category))
@@ -59,23 +61,31 @@ const Campaigns: React.FC = () => {
     return matchesSearch && matchesCategory;
   });
 
+  const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage);
+  const currentCampaigns = filteredCampaigns.slice(
+    (currentPage - 1) * campaignsPerPage,
+    currentPage * campaignsPerPage
+  );
+
   return (
     <div>
-      <div className='bg-[#059669] text-white text-center py-10'>
-        <h1 className='text-3xl font-bold'>Donate to The Big Alliance</h1>
-        <p className='text-lg mt-2'>
+      <div className="bg-[#059669] text-white text-center py-12">
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          Donate to BIG Alliance
+        </h1>
+        <p className="text-base md:text-lg">
           People in crisis need your help. Your donation will change lives.
         </p>
       </div>
       <div className="p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="flex flex-col md:flex-row md:justify-between mb-8 space-y-4 md:space-y-0 md:space-x-4">
           <div className="relative flex-1 max-w-xs mx-auto">
             <input
               type="text"
               placeholder="Search by title"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border p-2 rounded-md w-full text-sm pl-10 focus:border-[#059669] focus:ring-[#059669] transition-all"
+              className="border p-3 rounded-md w-full text-sm pl-12 focus:border-[#059669] focus:ring-[#059669] transition-all"
             />
             <svg
               className="absolute left-3 top-3 h-5 w-5 text-gray-400"
@@ -96,7 +106,7 @@ const Campaigns: React.FC = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="border p-2 rounded-md w-48 text-sm focus:border-[#059669] focus:ring-[#059669] transition-all"
+            className="border p-3 rounded-md w-full md:w-48 text-sm focus:border-[#059669] focus:ring-[#059669] transition-all"
           >
             <option value="">All Categories</option>
             {uniqueCategories.map((cat) => (
@@ -107,18 +117,41 @@ const Campaigns: React.FC = () => {
           </select>
         </div>
 
-        {filteredCampaigns.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-            {filteredCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign.id}
-                title={campaign.name}
-                body={campaign.description}
-                id={campaign.id}
-                imageSrc={campaign.image}
-                category={campaign.category}
-              />
-            ))}
+        {currentCampaigns.length > 0 ? (
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {currentCampaigns.map((campaign) => (
+                <CampaignCard
+                  key={campaign.id}
+                  title={campaign.name}
+                  body={campaign.description}
+                  id={campaign.id}
+                  imageSrc={campaign.image}
+                  category={campaign.category}
+                />
+              ))}
+            </div>
+            <div className="flex justify-between items-center mt-8">
+              <Button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50"
+              >
+                Previous
+              </Button>
+              <span className="text-sm text-gray-600">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50"
+              >
+                Next
+              </Button>
+            </div>
           </div>
         ) : (
           <p className="text-center text-gray-600 mt-10">
