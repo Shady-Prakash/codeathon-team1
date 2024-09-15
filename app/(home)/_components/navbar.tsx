@@ -44,10 +44,14 @@ const NavBar = () => {
     <nav
       className={
         !state
-          ? `sticky top-${top} bg-white z-10 w-full border-b md:border-0`
-          : "fixed bg-white z-10 w-full border-b md:border-0"
+          ? `sticky top-${top} bgs-white z-10 w-full shadow-sm border-t-2  border-b-4 border-gray-200 rounded-t-lg rounded-b-lg mx-auto`
+          : "fixed bg-white z-10 w-full shadow-sm border-b-4 border-t-2  border-gray-200 rounded-t-lg rounded-b-lg mx-auto"
       }
-      style={{ transition: "top ease-in-out 0.3s" }}
+      style={{
+        transition: "top ease-in-out 0.3s",
+        borderRadius: "50px",
+        marginTop: "10px",
+      }}
     >
       <div className="items-center px-4 max-w-screen-2xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
