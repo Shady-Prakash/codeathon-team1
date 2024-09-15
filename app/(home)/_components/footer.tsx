@@ -24,7 +24,6 @@ const Footer = () => {
     { title: "Contact", path: "/contact" },
     { title: "Privacy Policy", path: "/privacy-policy" },
   ];
-
   return (
     <footer className="bg-[#059669] text-white py-10 mt-auto ">
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
