@@ -2,6 +2,14 @@
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { campaigns } from "../../../data/campaigns";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaWhatsapp,
+  FaEnvelope,
+} from "react-icons/fa";
+import { FiCopy } from "react-icons/fi";
 
 interface Campaign {
   id: string;
@@ -18,6 +26,13 @@ export default function CampaignDetails() {
     () => campaigns.find((campaign) => campaign.id === id),
     [id]
   );
+
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => alert("Link copied to clipboard!"))
+      .catch((error) => console.error("Error copying link:", error));
+  };
 
   if (!campaign)
     return (
@@ -46,6 +61,97 @@ export default function CampaignDetails() {
           {campaign.description}
         </p>
       </section>
+
+      {/* Share Section */}
+      <section className="mt-6">
+        <div className="flex justify-between items-center">
+          <p className="text-xl font-semibold text-gray-900">
+            Share this campaign:
+          </p>
+          <div className="flex space-x-4">
+            {/* Twitter Share */}
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name}`
+              )}&url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on Twitter"
+              className="text-[#1DA1F2] hover:text-[#1a8cd8] text-xl"
+            >
+              <FaTwitter />
+            </a>
+
+            {/* Facebook Share */}
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                window.location.href
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on Facebook"
+              className="text-[#4267B2] hover:text-[#3b5998] text-xl"
+            >
+              <FaFacebookF />
+            </a>
+
+            {/* LinkedIn Share */}
+            <a
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+                window.location.href
+              )}&title=${encodeURIComponent(
+                campaign.name
+              )}&summary=${encodeURIComponent(campaign.description)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on LinkedIn"
+              className="text-[#0077B5] hover:text-[#006699] text-xl"
+            >
+              <FaLinkedinIn />
+            </a>
+
+            {/* WhatsApp Share */}
+            <a
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name} ${window.location.href}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on WhatsApp"
+              className="text-[#25D366] hover:text-[#25a256] text-xl"
+            >
+              <FaWhatsapp />
+            </a>
+
+            {/* Email Share */}
+            <a
+              href={`mailto:?subject=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name}`
+              )}&body=${encodeURIComponent(
+                `I found this campaign and thought you might be interested in it: ${window.location.href}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share via Email"
+              className="text-[#EA4335] hover:text-[#d73d32] text-xl"
+            >
+              <FaEnvelope />
+            </a>
+
+            {/* Copy Link */}
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              aria-label="Copy Link"
+              className="text-[#37AB87] hover:text-[#2e8c6c] text-xl"
+            >
+              <FiCopy />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Donation Section */}
       <section className="mt-6">
         <p className="text-xl font-semibold text-gray-900 mb-4">
           Select Donation Type
