@@ -5,7 +5,6 @@ import { getReportsData } from '../../api/reports/reports';
 import { fetchPayPalData } from '../../api/paypal/paypal';
 import { BarChartComponent } from './Charts/BarChart';
 import { LineChartComponent } from './Charts/LineChart';
-import { PieChartComponent } from './Charts/PieChart';
 
 const Dashboard: React.FC = () => {
   const [chartData, setChartData] = useState<any>([]);
@@ -54,12 +53,6 @@ const Dashboard: React.FC = () => {
               Line Chart - Donations & Refunds
             </h3>
             <LineChartComponent data={chartData} />
-          </div>
-          <div>
-            <h3 className='text-lg font-medium mb-2'>
-              Pie Chart - Payment Types
-            </h3>
-            <PieChartComponent data={payPalData} />
           </div>
         </div>
       </div>
