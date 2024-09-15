@@ -1,5 +1,5 @@
-import Slider from './_components/slider';
-import Campaign from './_components/campaign';
+import Slider from "./_components/slider";
+import Campaign from "./_components/campaign";
 
 const page = () => {
   return (
