@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
@@ -73,19 +71,7 @@ const Slider = memo(() => {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious
-          aria-label="Previous slide"
-          className="absolute left-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-80 p-3 rounded-full cursor-pointer shadow-lg transition-colors duration-300"
-        >
-          <span className="text-3xl font-bold text-white">{`<`}</span>
-        </CarouselPrevious>
-        <CarouselNext
-          aria-label="Next slide"
-          className="absolute right-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-80 p-3 rounded-full cursor-pointer shadow-lg transition-colors duration-300"
-        >
-          <span className="text-3xl font-bold text-white">{`>`}</span>
-        </CarouselNext>
-
+        
         <div className="absolute bottom-6 w-full flex justify-center items-center space-x-2">
           {Array.from({ length: count }).map((_, index) => (
             <button

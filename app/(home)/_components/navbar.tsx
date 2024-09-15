@@ -4,10 +4,8 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Donate from "./paypal/donate";
 import { useRouter } from "next/navigation";
-import { useAuth, UserButton } from "@clerk/nextjs";
-import { Actions } from "./actions";
+import { useAuth } from "@clerk/nextjs";
 
 const NavBar = () => {
   const [state, setState] = useState(false);
@@ -17,19 +15,17 @@ const NavBar = () => {
   const { userId } = useAuth();
 
   useEffect(() => {
-    // Function to handle scroll events
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       if (prevScrollpos > currentScrollPos) {
-        setTop(0); // Show navbar
+        setTop(0);
       } else {
-        setTop(-110); // Hide navbar
+        setTop(-110);
       }
       setPrevScrollpos(currentScrollPos);
     };
-    // Add scroll event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
-    // Clean up by removing the event listener when the component unmounts
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -37,17 +33,11 @@ const NavBar = () => {
 
   const menus = [
     { title: "Home", path: "/" },
-    { title: "Register Donor", path: "/register" },
+    { title: "Become a Donor", path: "/register" },
   ];
 
   const clickHandler = () => {
     router.push("/sign-in");
-  };
-
-  const donationHandler = async () => {
-    const response = await fetch("https://www.paypal.com/donate", {
-      method: "POST",
-    });
   };
 
   return (
@@ -99,28 +89,22 @@ const NavBar = () => {
             state ? "block text-center" : "hidden"
           } md:flex gap-3 items-center`}
         >
-          {
-            !userId ? (
-              <Button
-                variant="success"
-                border="rounded"
-                size="lg"
-                onClick={clickHandler}
-              >
-                Sign in
+          {!userId ? (
+            <Button
+              variant="success"
+              border="rounded"
+              size="lg"
+              onClick={clickHandler}
+            >
+              Sign in
+            </Button>
+          ) : (
+            <Link href="/dashboard">
+              <Button variant="success" border="rounded" size="lg">
+                Dashboard
               </Button>
-            ) : (
-              // <form action="https://www.paypal.com/donate" method="post" target="_top">
-              //   <input type="hidden" name="hosted_button_id" value="C63JQ5E9GLUSC" />
-              <Actions
-              // userId={row.original.publicUserData?.userId}
-              // role={row.original.role}
-              />
-            )
-            // </form>
-          }
-          {/* <UserButton afterSignOutUrl="/"/> */}
-          {/* <Donate/> */}
+            </Link>
+          )}
         </div>
       </div>
     </nav>
