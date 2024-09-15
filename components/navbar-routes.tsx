@@ -19,26 +19,26 @@ export const NavbarRoutes = () => {
     <>
       {isSearchPage && (
         <div className="hidden md:block">
-          <SearchInput/>
+          <SearchInput />
         </div>
       )}
       <div className="flex gap-x-2 ml-auto">
         {isAdminPage || isCoursePage ? (
           <Link href="/dashboard">
             <Button size="sm" variant="ghost">
-              <LogOut className="h-4 w-4 mr-2"/>
+              <LogOut className="h-4 w-4 mr-2" />
               Exit
             </Button>
           </Link>
         ) : (
-          <Link href="/dashboard/admin/courses">
+          <Link href="/dashboard/admin/campaigns">
             <Button size="sm" variant="ghost">
               Admin mode
             </Button>
           </Link>
         )}
-        <UserButton afterSignOutUrl="/"/>
+        <UserButton afterSignOutUrl="/" />
       </div>
     </>
-  )
-}
+  );
+};
