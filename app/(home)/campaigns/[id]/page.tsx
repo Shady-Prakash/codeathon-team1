@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { campaigns } from "../../../data/campaigns";
 import {
   FaFacebookF,
@@ -21,6 +21,7 @@ interface Campaign {
 
 export default function CampaignDetails() {
   const { id } = useParams();
+  const [isReadMore, setIsReadMore] = useState(false);
 
   const campaign = useMemo(
     () => campaigns.find((campaign) => campaign.id === id),
@@ -33,6 +34,8 @@ export default function CampaignDetails() {
       .then(() => alert("Link copied!"))
       .catch((error) => console.error("Error copying link:", error));
   };
+
+  const toggleReadMore = () => setIsReadMore(!isReadMore);
 
   if (!campaign)
     return (
@@ -58,7 +61,15 @@ export default function CampaignDetails() {
           className="w-full h-80 object-cover rounded-lg shadow-lg"
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
-          {campaign.description}
+          {isReadMore
+            ? campaign.description
+            : `${campaign.description.slice(0, 200)}...`}{" "}
+          <button
+            onClick={toggleReadMore}
+            className="text-blue-500 hover:underline ml-1"
+          >
+            {isReadMore ? "Read Less" : "Read More"}
+          </button>
         </p>
       </section>
 
@@ -133,7 +144,6 @@ export default function CampaignDetails() {
             >
               <FaEnvelope />
             </a>
-
             <button
               type="button"
               onClick={handleCopyLink}
