@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   BarChart,
@@ -11,18 +11,18 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { SidebarItem } from "./sidebar-item";
+import { SidebarItem } from './sidebar-item';
 
 const guestRoutes = [
+  {
+    icon: BarChart,
+    label: 'Analytics',
+    href: '/dashboard',
+  },
   {
     icon: Building2,
     label: "Verified Companies",
     href: "/dashboard/verified-companies",
-  },
-  {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/dashboard",
   },
   {
     icon: Compass,
@@ -43,11 +43,6 @@ const adminRoutes = [
     href: "/dashboard/admin/unverified-companies",
   },
   {
-    icon: BarChart,
-    label: "Analytics",
-    href: "/dashboard/admin/analytics",
-  },
-  {
     icon: UserCog,
     label: "Manage Roles",
     href: "/dashboard/admin/roles",
@@ -62,7 +57,7 @@ export const SidebarRoutes = () => {
   const routes = isAdminPage ? adminRoutes : guestRoutes;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className='flex flex-col w-full'>
       {routes.map((route) => (
         <SidebarItem
           key={route.href}
