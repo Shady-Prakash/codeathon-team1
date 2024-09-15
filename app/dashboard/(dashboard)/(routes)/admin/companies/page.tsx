@@ -13,7 +13,11 @@ const CompaniesPage = async () => {
   }
 
   const companies = await db.company.findMany({
-    where: {},
+    where: {
+      status: {
+        not: "pending",
+      },
+    },
     orderBy: {
       id: "desc",
     },
