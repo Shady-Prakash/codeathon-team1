@@ -4,12 +4,12 @@ import { useMemo } from "react";
 import { campaigns } from "../../../data/campaigns";
 import {
   FaFacebookF,
-  FaTwitter,
   FaLinkedinIn,
   FaWhatsapp,
   FaEnvelope,
 } from "react-icons/fa";
-import { FiCopy } from "react-icons/fi";
+import { FiLink } from "react-icons/fi";
+import { TbBrandX } from "react-icons/tb"; // X (formerly Twitter) logo
 
 interface Campaign {
   id: string;
@@ -30,7 +30,7 @@ export default function CampaignDetails() {
   const handleCopyLink = () => {
     navigator.clipboard
       .writeText(window.location.href)
-      .then(() => alert("Link copied to clipboard!"))
+      .then(() => alert("Link copied!"))
       .catch((error) => console.error("Error copying link:", error));
   };
 
@@ -62,27 +62,24 @@ export default function CampaignDetails() {
         </p>
       </section>
 
-      {/* Share Section */}
       <section className="mt-6">
         <div className="flex justify-between items-center">
           <p className="text-xl font-semibold text-gray-900">
             Share this campaign:
           </p>
-          <div className="flex space-x-4">
-            {/* Twitter Share */}
+          <div className="flex flex-wrap gap-4">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                 `Check out this campaign: ${campaign.name}`
               )}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Share on Twitter"
+              aria-label="Share on X"
               className="text-[#1DA1F2] hover:text-[#1a8cd8] text-xl"
             >
-              <FaTwitter />
+              <TbBrandX />
             </a>
 
-            {/* Facebook Share */}
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                 window.location.href
@@ -95,13 +92,14 @@ export default function CampaignDetails() {
               <FaFacebookF />
             </a>
 
-            {/* LinkedIn Share */}
             <a
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
                 window.location.href
               )}&title=${encodeURIComponent(
                 campaign.name
-              )}&summary=${encodeURIComponent(campaign.description)}`}
+              )}&summary=${encodeURIComponent(
+                campaign.description
+              )}&source=LinkedIn`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Share on LinkedIn"
@@ -110,7 +108,6 @@ export default function CampaignDetails() {
               <FaLinkedinIn />
             </a>
 
-            {/* WhatsApp Share */}
             <a
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
                 `Check out this campaign: ${campaign.name} ${window.location.href}`
@@ -123,7 +120,6 @@ export default function CampaignDetails() {
               <FaWhatsapp />
             </a>
 
-            {/* Email Share */}
             <a
               href={`mailto:?subject=${encodeURIComponent(
                 `Check out this campaign: ${campaign.name}`
@@ -138,20 +134,18 @@ export default function CampaignDetails() {
               <FaEnvelope />
             </a>
 
-            {/* Copy Link */}
             <button
               type="button"
               onClick={handleCopyLink}
               aria-label="Copy Link"
               className="text-[#37AB87] hover:text-[#2e8c6c] text-xl"
             >
-              <FiCopy />
+              <FiLink />
             </button>
           </div>
         </div>
       </section>
 
-      {/* Donation Section */}
       <section className="mt-6">
         <p className="text-xl font-semibold text-gray-900 mb-4">
           Select Donation Type
