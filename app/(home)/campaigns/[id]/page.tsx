@@ -1,6 +1,7 @@
 "use client";
-import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+
+import { useParams, useRouter } from "next/navigation";
+import { useMemo, useState, useCallback } from "react";
 import { campaigns } from "../../../data/campaigns";
 import {
   FaFacebookF,
@@ -21,23 +22,45 @@ interface Campaign {
 
 export default function CampaignDetails() {
   const { id } = useParams();
+  const router = useRouter();
   const [isReadMore, setIsReadMore] = useState(false);
+  const [donationType, setDonationType] = useState<string | null>(null);
 
   const campaign = useMemo(
     () => campaigns.find((campaign) => campaign.id === id),
     [id]
   );
 
-  const handleCopyLink = () => {
+  const handleCopyLink = useCallback(() => {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => alert("Link copied!"))
       .catch((error) => console.error("Error copying link:", error));
-  };
+  }, []);
 
-  const toggleReadMore = () => setIsReadMore(!isReadMore);
+  const toggleReadMore = useCallback(() => {
+    setIsReadMore((prev) => !prev);
+  }, []);
 
-  if (!campaign)
+  const handleDonateNow = useCallback(() => {
+    if (donationType) {
+      router.push(
+        `/campaigns/${id}/${
+          donationType === "individual"
+            ? `donate-as-individual?campaignName=${encodeURIComponent(
+                campaign.name
+              )}`
+            : `donate-as-company?campaignName=${encodeURIComponent(
+                campaign.name
+              )}`
+        }`
+      );
+    } else {
+      alert("Please select a donation type.");
+    }
+  }, [donationType, id, campaign.name, router]);
+
+  if (!campaign) {
     return (
       <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-semibold text-gray-800">
@@ -45,6 +68,7 @@ export default function CampaignDetails() {
         </h1>
       </div>
     );
+  }
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
@@ -54,6 +78,7 @@ export default function CampaignDetails() {
         </h1>
         <p className="text-lg text-gray-600 mt-1">{campaign.category}</p>
       </header>
+
       <section className="mb-6">
         <img
           src={campaign.image}
@@ -63,7 +88,7 @@ export default function CampaignDetails() {
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
             ? campaign.description
-            : `${campaign.description.slice(0, 200)}...`}{" "}
+            : `${campaign.description.slice(0, 200)}...`}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"
@@ -144,6 +169,7 @@ export default function CampaignDetails() {
             >
               <FaEnvelope />
             </a>
+
             <button
               type="button"
               onClick={handleCopyLink}
@@ -161,28 +187,30 @@ export default function CampaignDetails() {
           Select Donation Type
         </p>
         <div className="flex flex-col space-y-3 mb-6">
-          <label className="flex items-center space-x-3 cursor-pointer">
-            <input
-              type="radio"
-              name="donation-type"
-              value="individual"
-              className="h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-            <span className="text-gray-800 text-lg">Donate as Individual</span>
-          </label>
-          <label className="flex items-center space-x-3 cursor-pointer">
-            <input
-              type="radio"
-              name="donation-type"
-              value="company"
-              className="h-5 w-5 text-blue-500 border-gray-300 rounded"
-            />
-            <span className="text-gray-800 text-lg">Donate as Company</span>
-          </label>
+          {["individual", "company"].map((type) => (
+            <label
+              key={type}
+              className="flex items-center space-x-3 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="donation-type"
+                value={type}
+                checked={donationType === type}
+                onChange={(e) => setDonationType(e.target.value)}
+                className="h-5 w-5 text-blue-500 border-gray-300 rounded"
+                aria-checked={donationType === type ? "true" : "false"}
+              />
+              <span className="text-gray-800 text-lg">
+                Donate as {type.charAt(0).toUpperCase() + type.slice(1)}
+              </span>
+            </label>
+          ))}
         </div>
         <div className="mt-4 text-center">
           <button
             type="button"
+            onClick={handleDonateNow}
             className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full"
           >
             Donate Now
