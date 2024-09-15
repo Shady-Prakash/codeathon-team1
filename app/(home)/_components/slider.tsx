@@ -8,8 +8,8 @@ import {
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { useRef, useState, memo, useEffect } from "react";
 import { type CarouselApi } from "@/components/ui/carousel";
-import { useEffect, useRef, useState, memo } from "react";
 
 const Slider = memo(() => {
   const [api, setApi] = useState<CarouselApi>();
@@ -35,16 +35,17 @@ const Slider = memo(() => {
 
   return (
     <div className="relative w-full">
-      <section className="py-12 px-6 bg-gradient-to-r from-gray-100 to-gray-200 text-center w-full">
-        <h2 className="text-3xl font-semibold mb-6 text-gray-800">
-          About Our Company
+      <section className="py-16 px-8 bg-gray-100 text-center w-full">
+        <h2 className="text-4xl font-semibold mb-6 text-gray-900 tracking-tight">
+          About BIG Alliance
         </h2>
-        <p className="text-xl text-gray-600 leading-relaxed">
-          We are committed to making a positive impact in the world through our
-          innovative solutions and dedicated service. Our mission is to create
-          lasting change and empower communities.
+        <p className="text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+          We connect businesses with community organisations and educational
+          institutions to create better opportunities, better spaces, and better
+          lives for Islington residents.
         </p>
       </section>
+
       <Carousel
         setApi={setApi}
         className="relative w-full"
@@ -54,30 +55,31 @@ const Slider = memo(() => {
       >
         <CarouselContent className="relative">
           {["sliderImg3", "sliderImg1", "sliderImg2"].map((img, index) => (
-            <CarouselItem key={index} className="relative p-4">
+            <CarouselItem key={index} className="relative px-2">
               <AspectRatio
-                ratio={16 / 9} // Maintain full width aspect ratio
-                className="overflow-hidden rounded-xl shadow-lg transform scale-90" // Apply scale transform
+                ratio={16 / 9}
+                className="overflow-hidden rounded-lg shadow-lg transform scale-90"
               >
                 <Image
                   src={`/assets/slider/${img}.jpg`}
                   alt={`Charity slider image ${index + 1}`}
                   fill
-                  className="object-cover transition-transform duration-500 ease-in-out"
+                  className="object-cover"
                 />
               </AspectRatio>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        <div className="absolute bottom-4 w-full flex justify-center items-center">
+        
+        <div className="absolute bottom-6 w-full flex justify-center items-center space-x-2">
           {Array.from({ length: count }).map((_, index) => (
             <button
               key={index}
               aria-label={`Go to slide ${index + 1}`}
-              className={`h-4 w-4 mx-2 rounded-full ${
-                isActive(index) ? "bg-[#059669] scale-110" : "bg-gray-300"
-              } transition-transform duration-300`}
+              className={`h-4 w-4 rounded-full ${
+                isActive(index) ? "bg-[#37AB87]" : "bg-gray-400"
+              } transition-all duration-300`}
               onClick={() => api?.scrollTo(index)}
             />
           ))}
