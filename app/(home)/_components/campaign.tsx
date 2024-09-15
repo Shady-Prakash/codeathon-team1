@@ -22,19 +22,19 @@ const CampaignCard: React.FC<CampaignProps> = ({
   const truncatedBody = body.length > 300 ? `${body.slice(0, 300)}...` : body;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg flex flex-col overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
       <img
         src={imageSrc}
         alt={title}
-        className="w-full h-64 object-cover rounded-t-lg"
+        className="w-full h-48 object-cover rounded-t-lg"
       />
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+      <div className="p-4 flex flex-col">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
         <p className="text-gray-700 text-sm flex-1">{truncatedBody}</p>
       </div>
       <div className="p-4 border-t border-gray-200 text-center">
         <Link href={`/campaigns/${id}`}>
-          <Button className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full">
+          <Button className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full">
             Donate now
           </Button>
         </Link>
@@ -47,7 +47,7 @@ const Campaigns: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const campaignsPerPage = 3; 
+  const campaignsPerPage = 3; // Adjust this number as needed
 
   const uniqueCategories = Array.from(
     new Set(campaigns.map((campaign) => campaign.category))
@@ -70,13 +70,15 @@ const Campaigns: React.FC = () => {
   return (
     <div>
       <div className="bg-[#059669] text-white text-center py-12">
-        <h1 className="text-4xl font-bold mb-2">Donate to BIG Alliance</h1>
-        <p className="text-lg">
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          Donate to BIG Alliance
+        </h1>
+        <p className="text-base md:text-lg">
           People in crisis need your help. Your donation will change lives.
         </p>
       </div>
       <div className="p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between mb-8 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="flex flex-col md:flex-row md:justify-between mb-8 space-y-4 md:space-y-0 md:space-x-4">
           <div className="relative flex-1 max-w-xs mx-auto">
             <input
               type="text"
@@ -104,7 +106,7 @@ const Campaigns: React.FC = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="border p-3 rounded-md w-full sm:w-48 text-sm focus:border-[#059669] focus:ring-[#059669] transition-all"
+            className="border p-3 rounded-md w-full md:w-48 text-sm focus:border-[#059669] focus:ring-[#059669] transition-all"
           >
             <option value="">All Categories</option>
             {uniqueCategories.map((cat) => (
@@ -117,7 +119,7 @@ const Campaigns: React.FC = () => {
 
         {currentCampaigns.length > 0 ? (
           <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {currentCampaigns.map((campaign) => (
                 <CampaignCard
                   key={campaign.id}
