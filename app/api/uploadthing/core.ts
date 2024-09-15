@@ -11,7 +11,7 @@ const handleAuth = () => {
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
-  courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+  campaignImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     // Set permissions and file types for this FileRoute
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),

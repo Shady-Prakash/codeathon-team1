@@ -12,7 +12,7 @@ export const NavbarRoutes = () => {
   const pathname = usePathname();
 
   const isAdminPage = pathname?.startsWith("/dashboard/admin");
-  const isCoursePage = pathname?.includes("/dashboard/courses");
+  const isCampaignPage = pathname?.includes("/dashboard/admin/campaigns");
   const isSearchPage = pathname === "/dashboard/search";
 
   return (
@@ -23,7 +23,7 @@ export const NavbarRoutes = () => {
         </div>
       )}
       <div className="flex gap-x-2 ml-auto">
-        {isAdminPage || isCoursePage ? (
+        {isAdminPage || isCampaignPage ? (
           <Link href="/dashboard">
             <Button size="sm" variant="ghost">
               <LogOut className="h-4 w-4 mr-2"/>
@@ -31,7 +31,7 @@ export const NavbarRoutes = () => {
             </Button>
           </Link>
         ) : (
-          <Link href="/dashboard/admin/courses">
+          <Link href="/dashboard/admin/campaigns">
             <Button size="sm" variant="ghost">
               Admin mode
             </Button>
