@@ -4,8 +4,8 @@ import Campaign from "./_components/campaign";
 const page = () => {
   return (
     <>
-      <Slider />
       <Campaign />
+      <Slider />
     </>
   );
 };

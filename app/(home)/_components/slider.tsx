@@ -37,6 +37,16 @@ const Slider = memo(() => {
 
   return (
     <div className="relative w-full">
+      <section className="py-12 px-6 bg-gradient-to-r from-gray-100 to-gray-200 text-center w-full">
+        <h2 className="text-3xl font-semibold mb-6 text-gray-800">
+          About Our Company
+        </h2>
+        <p className="text-xl text-gray-600 leading-relaxed">
+          We are committed to making a positive impact in the world through our
+          innovative solutions and dedicated service. Our mission is to create
+          lasting change and empower communities.
+        </p>
+      </section>
       <Carousel
         setApi={setApi}
         className="relative w-full"
@@ -46,10 +56,10 @@ const Slider = memo(() => {
       >
         <CarouselContent className="relative">
           {["sliderImg3", "sliderImg1", "sliderImg2"].map((img, index) => (
-            <CarouselItem key={index} className="relative">
+            <CarouselItem key={index} className="relative p-4">
               <AspectRatio
-                ratio={16 / 9}
-                className="overflow-hidden rounded-lg"
+                ratio={16 / 9} // Maintain full width aspect ratio
+                className="overflow-hidden rounded-xl shadow-lg transform scale-90" // Apply scale transform
               >
                 <Image
                   src={`/assets/slider/${img}.jpg`}
@@ -64,11 +74,11 @@ const Slider = memo(() => {
 
         <CarouselPrevious
           aria-label="Previous slide"
-          className="absolute left-4 top-[50%] transform -translate-y-1/2 text-white bg-black bg-opacity-60 hover:bg-opacity-80 p-2 rounded-full cursor-pointer shadow-lg"
+          className="absolute left-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-70 hover:bg-opacity-90 p-3 rounded-full cursor-pointer shadow-xl transition-colors duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-8 w-8"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -83,11 +93,11 @@ const Slider = memo(() => {
         </CarouselPrevious>
         <CarouselNext
           aria-label="Next slide"
-          className="absolute right-4 top-[50%] transform -translate-y-1/2 text-white bg-black bg-opacity-60 hover:bg-opacity-80 p-2 rounded-full cursor-pointer shadow-lg"
+          className="absolute right-4 top-[50%] transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-70 hover:bg-opacity-90 p-3 rounded-full cursor-pointer shadow-xl transition-colors duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-8 w-8"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -106,7 +116,7 @@ const Slider = memo(() => {
             <button
               key={index}
               aria-label={`Go to slide ${index + 1}`}
-              className={`h-3 w-3 mx-2 rounded-full ${
+              className={`h-4 w-4 mx-2 rounded-full ${
                 isActive(index) ? "bg-[#059669] scale-110" : "bg-gray-300"
               } transition-transform duration-300`}
               onClick={() => api?.scrollTo(index)}
