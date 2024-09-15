@@ -9,7 +9,7 @@ const ReportsPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getReportsData({ page: 1, pageSize: 10, filters: {} });
-      setReportData(data.items); // Adjust based on your API response
+      setReportData(data.items);
     };
 
     fetchData();

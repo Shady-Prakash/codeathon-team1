@@ -14,7 +14,7 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
   const [campaign, setCampaign] = useState(filters.campaign || '');
   const [donor, setDonor] = useState(filters.donor || '');
   const [type, setType] = useState(filters.type || '');
-  const [chartView, setChartView] = useState(filters.chartView || 'Table'); // Default chart view is 'Table'
+  const [chartView, setChartView] = useState(filters.chartView || 'Table');
 
   // Extract unique campaigns and donors from the mock data
   const uniqueCampaigns = Array.from(
@@ -41,7 +41,6 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
     <div className='my-4'>
       <h2 className='text-xl font-semibold mb-4'>Filters</h2>
       <form>
-        {/* Campaign Dropdown */}
         <label
           htmlFor='campaign'
           className='block text-sm font-medium text-gray-700'>
@@ -59,8 +58,6 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
             </option>
           ))}
         </select>
-
-        {/* Donor Dropdown */}
         <label
           htmlFor='donor'
           className='block text-sm font-medium text-gray-700 mt-4'>
@@ -78,8 +75,6 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
             </option>
           ))}
         </select>
-
-        {/* Type Dropdown */}
         <label
           htmlFor='type'
           className='block text-sm font-medium text-gray-700 mt-4'>
@@ -94,8 +89,6 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
           <option value='Donation'>Donation</option>
           <option value='Refund'>Refund</option>
         </select>
-
-        {/* Chart View Dropdown */}
         <label
           htmlFor='chartView'
           className='block text-sm font-medium text-gray-700 mt-4'>
@@ -111,7 +104,6 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
           <option value='Pie Chart'>Pie Chart</option>
           <option value='Line Chart'>Line Chart</option>
         </select>
-
         <button
           type='button'
           onClick={handleFilterChange}
@@ -119,10 +111,7 @@ const ReportFilters: React.FC<ReportFiltersProps> = ({
           Apply Filters
         </button>
       </form>
-
-      {/* Conditionally render the table or other views */}
       {chartView === 'Table' && <TableChart data={filteredData} />}
-      {/* You can add conditions to render different charts here */}
     </div>
   );
 };

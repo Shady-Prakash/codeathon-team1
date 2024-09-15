@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReportFilters from './ReportFilters';
-import TableChart from './Charts/TableChart'; // Import the new TableChart component
+import TableChart from './Charts/TableChart';
 import { BarChartComponent } from './Charts/BarChart';
 import { LineChartComponent } from './Charts/LineChart';
 import { PieChartComponent } from './Charts/PieChart';
@@ -48,7 +48,6 @@ const Dashboard: React.FC = () => {
     <div className='p-4'>
       <ReportFilters filters={filters} setFilters={setFilters} />
       <TableChart data={reportData} />{' '}
-      {/* Replace ReportTable with TableChart */}
       <div className='my-8'>
         <h2 className='text-xl font-semibold mb-4'>Charts</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
