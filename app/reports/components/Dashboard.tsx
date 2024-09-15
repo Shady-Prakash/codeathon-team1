@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import ReportFilters from './ReportFilters';
-import TableChart from './Charts/TableChart';
+import { DataTable } from './Table/DataTable';
+import { columns } from './Table/columns';
+import { getReportsData } from '../../api/reports/reports';
+import { fetchPayPalData } from '../../api/paypal/paypal';
 import { BarChartComponent } from './Charts/BarChart';
 import { LineChartComponent } from './Charts/LineChart';
 import { PieChartComponent } from './Charts/PieChart';
-import { getReportsData } from '../../api/reports/reports';
-import { fetchPayPalData } from '../../api/paypal/paypal';
 
 const Dashboard: React.FC = () => {
   const [chartData, setChartData] = useState<any>([]);
   const [reportData, setReportData] = useState<any[]>([]);
   const [payPalData, setPayPalData] = useState<any[]>([]);
   const [filters, setFilters] = useState<any>({});
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize] = useState<number>(10);
 
   const fetchData = async () => {
-    const data = await getReportsData({ page: currentPage, pageSize, filters });
+    const data = await getReportsData({ page: 1, pageSize: 10, filters }); // Fetch data for the first page
     setReportData(data.items);
-    setTotalPages(data.totalPages);
 
     const payPalData = await fetchPayPalData();
     setPayPalData(payPalData);
@@ -36,18 +32,14 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, filters]);
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  }, [filters]);
 
   return (
     <div className='p-4'>
-      <ReportFilters filters={filters} setFilters={setFilters} />
-      <TableChart data={reportData} />{' '}
+      {/* Data Table Component */}
+      <DataTable columns={columns} data={reportData} />
+
+      {/* Charts Section */}
       <div className='my-8'>
         <h2 className='text-xl font-semibold mb-4'>Charts</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -70,23 +62,6 @@ const Dashboard: React.FC = () => {
             <PieChartComponent data={payPalData} />
           </div>
         </div>
-      </div>
-      <div className='flex justify-between items-center'>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className='px-4 py-2 bg-gray-300 text-black rounded'>
-          Previous
-        </button>
-        <span className='text-lg'>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className='px-4 py-2 bg-gray-300 text-black rounded'>
-          Next
-        </button>
       </div>
     </div>
   );
