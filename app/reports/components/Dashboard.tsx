@@ -40,18 +40,18 @@ const Dashboard: React.FC = () => {
 
       {/* Charts Section */}
       <div className='my-8'>
-        <h2 className='text-xl font-semibold mb-4'>Charts</h2>
+        {/* <h2 className='text-xl font-semibold mb-4'>Charts</h2> */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <div>
-            <h3 className='text-lg font-medium mb-2'>
+            {/* <h3 className='text-lg font-medium mb-2'>
               Bar Chart - Donations vs Refunds
-            </h3>
+            </h3> */}
             <BarChartComponent data={chartData} />
           </div>
           <div>
-            <h3 className='text-lg font-medium mb-2'>
+            {/* <h3 className='text-lg font-medium mb-2'>
               Line Chart - Donations & Refunds
-            </h3>
+            </h3> */}
             <LineChartComponent data={chartData} />
           </div>
         </div>

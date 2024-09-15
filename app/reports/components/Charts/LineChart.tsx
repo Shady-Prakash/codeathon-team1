@@ -45,8 +45,8 @@ export function LineChartComponent({ data }: LineChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart - Donations & Refunds</CardTitle>
-        <CardDescription>Monthly Trends</CardDescription>
+        <CardTitle>Donations</CardTitle>
+        <CardDescription>Report</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

@@ -38,8 +38,8 @@ export function BarChartComponent({ data }: BarChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Donations vs Refunds</CardTitle>
-        <CardDescription>Monthly Data</CardDescription>
+        <CardTitle>Donations</CardTitle>
+        <CardDescription>Report</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
