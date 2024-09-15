@@ -2,6 +2,7 @@
   "name": "the-big-alliance",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -37,7 +38,6 @@
     "@types/react-dom": "18.2.18",
     "@uploadthing/react": "^6.2.2",
     "add": "^2.0.6",
-    "aria-hidden": "^1.2.4",
     "autoprefixer": "10.4.16",
     "axios": "^1.6.3",
     "class-variance-authority": "^0.7.0",
