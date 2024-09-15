@@ -1,26 +1,25 @@
-import { Category, Course } from "@prisma/client"
+import { Category, Campaign } from "@prisma/client"
 import { db } from "@/lib/db";
 import { getProgress } from "./get-progress";
+import { campaigns } from "@/app/data/campaigns";
 
-type CourseWithProgressWithCategory = Course & {
-  category: Category | null;
-  chapters: { id: string }[];
-  progress: number | null;
-}
+// type CampaignWithProgressWithCategory = Campaign & {
+//   category: Category | null;
+//   camapigns: { id: string }[];
+//   progress: number | null;
+// }
 
-type GetCourses = {
-  userId: string;
+type GetCampaigns = {
   title?: string;
   categoryId?: string;
 }
 
-export const getCourses = async ({
-  userId,
+export const getCampaigns = async ({
   title,
   categoryId
-}: GetCourses): Promise<CourseWithProgressWithCategory[]> => {
+}: GetCampaigns) => {
   try {
-    const courses = await db.course.findMany({
+    const campaigns = await db.campaign.findMany({
       where: {
         isPublished: true,
         title: {
@@ -30,48 +29,37 @@ export const getCourses = async ({
       },
       include: {
         category: true,
-        chapters: {
-          where: {
-            isPublished: true,
-          },
-          select: {
-            id: true,
-          }
-        },
-        purchases: {
-          where: {
-            userId,
-          }
-        }
       },
       orderBy: {
         createdAt: "desc",
       }
     });
 
-    const coursesWithProgress: CourseWithProgressWithCategory[] = await Promise.all(
-      courses.map(async course => {
-        if (course.purchases.length === 0) {
-          return {
-            ...course,
-            progress: null,
-          }
-        }
+    return campaigns;
+    // const campaignsWithProgress: CampaignWithProgressWithCategory[] = await Promise.all(
+    //   campaigns.map(async campaign => {
+    //     if (campaign.fund === 0) {
+    //       return {
+    //         ...campaign,
+    //         // progress: null,
+    //       }
+    //     }
 
-        const progressPercentage = await getProgress(userId, course.id);
+    //     // const progressPercentage = await getProgress(userId, course.id);
 
-        return {
-          ...course,
-          progress: progressPercentage,
-        };
+    //     return {
+    //       ...campaign,
+    //       // progress: progressPercentage,
+    //     };
 
-      })
-    );
+    //   })
+    // );
 
 
-    return coursesWithProgress;
+    // return([campaigns]);
+    // console.log(campaigns)
   } catch (error) {
-    console.log("[GET_COURSES]", error);
+    console.log("[GET_CAMPAIGNS]", error);
     return [];
   }
 }

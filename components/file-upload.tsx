@@ -18,6 +18,8 @@ export const FileUpload = ({
     <UploadDropzone
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
+        console.log(res)
+        toast.success(res?.[0].url)
         onChange(res?.[0].url);
       }}
       onUploadError={(error: Error) => {

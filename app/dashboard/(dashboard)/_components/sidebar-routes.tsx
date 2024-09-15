@@ -39,7 +39,7 @@ const adminRoutes = [
 export const SidebarRoutes = () => {
   const pathname = usePathname();
 
-  const isAdminPage = pathname?.includes("/admin");
+  const isAdminPage = pathname?.includes("/dashboard/admin");
   
   const routes = isAdminPage ? adminRoutes : guestRoutes;
 
