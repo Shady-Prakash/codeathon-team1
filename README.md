@@ -15,9 +15,9 @@ We worked to ensure user input validation and security (OWASP best practices). F
 
 ## How to Install and Run the Project
 1. Clone the repository.
-2. Run `npm install` to install dependencies.
+2. Run `yarn install` to install dependencies.
 3. Create `.env` file with your environment variables (e.g., PayPal API keys, database connection).
-4. Run `npm run dev` to start the development server.
+4. Run `yarn run dev` to start the development server.
 
 ## How to Use the Project
 - For admins: Log in to manage campaigns, view donations, and generate reports.
