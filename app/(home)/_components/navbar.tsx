@@ -37,7 +37,7 @@ const NavBar = () => {
 
   const menus = [
     { title: "Home", path: "/" },
-    { title: "Register", path: "/register" },
+    { title: "Register Donor", path: "/register" },
   ];
 
   const clickHandler = () => {
