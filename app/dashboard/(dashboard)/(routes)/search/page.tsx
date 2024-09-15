@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 import { SearchInput } from "@/components/search-input";
-import { getCourses } from "@/actions/get-courses";
-import { CoursesList } from "@/components/courses-list";
+import { getCampaigns } from "@/actions/get-campaigns";
+import { CampaignsList } from "@/components/campaigns-list";
 
 import { Categories } from "./_components/categories";
 
@@ -29,9 +29,9 @@ const SearchPage = async ({
       name: "asc"
     }
   });
+  console.log("categories", categories)
 
-  const courses = await getCourses({
-    userId,
+  const campaigns = await getCampaigns({
     ...searchParams,
   });
 
@@ -41,10 +41,13 @@ const SearchPage = async ({
         <SearchInput/>
       </div>
       <div className="p-6 space-y-4">
-        <Categories
-          items={categories}
-        />
-        <CoursesList items={courses} />
+        {
+          campaigns.length !==0 &&  
+          <Categories
+            items={categories}
+          />
+        }
+        <CampaignsList items={campaigns} />
       </div>
     </>
    );

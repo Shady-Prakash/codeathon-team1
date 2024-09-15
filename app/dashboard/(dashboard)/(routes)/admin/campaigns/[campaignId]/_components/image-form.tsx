@@ -35,6 +35,7 @@ export const ImageForm = ({
   const router = useRouter();
 
   const onSubmit = async(values: z.infer<typeof formSchema>) => {
+    console.log("image", values.imageUrl)
     try {
       await axios.patch(`/api/campaigns/${campaignId}`, values);
       toast.success("Campaign updated");

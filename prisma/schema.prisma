@@ -9,27 +9,27 @@ generator client {
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
-// model User {
-//   id        String @id @default(uuid())
-//   firstName String @db.Text
-//   lastName  String @db.Text
-//   email     String @unique
-//   password  String
-//   role      Role   @relation(fields: [roleId], references: [id])
-//   roleId    String
+model User {
+  id        String @id @default(uuid())
+  firstName String @db.Text
+  lastName  String @db.Text
+  email     String @unique
+  password  String
+  role      Role   @relation(fields: [roleId], references: [id])
+  roleId    String
 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   @@index([roleId])
-// }
+  @@index([roleId])
+}
 
-// model Role {
-//   id     String  @id @default(uuid())
-//   title  String
-//   status Boolean
-//   user   User[]
-// }
+model Role {
+  id     String  @id @default(uuid())
+  title  String
+  status Boolean
+  user   User[]
+}
 
 model Course {
   id          String  @id @default(uuid())
@@ -54,10 +54,29 @@ model Course {
   @@fulltext([title])
 }
 
+model Campaign {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
+  description String? @db.Text
+  imageUrl    String? @db.Text
+  fund        Float?
+  isPublished Boolean @default(false)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@fulltext([title])
+}
+
 model Category {
-  id      String   @id @default(uuid())
-  name    String   @unique
-  courses Course[]
+  id       String     @id @default(uuid())
+  name     String     @unique
+  Campaign Campaign[]
+  Course   Course[]
 }
 
 model Attachment {
@@ -178,21 +197,6 @@ model Address {
   updatedAt DateTime @updatedAt
 
   @@index([donorId])
-}
-
-model Campaign {
-  id          String  @id @default(uuid())
-  userId      String
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  fund        Float?
-  isPublished Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@fulltext([title])
 }
 
 // model Member {

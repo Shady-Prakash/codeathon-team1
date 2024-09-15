@@ -12,6 +12,7 @@ import { CampaignDescriptionForm } from "./_components/campaign-description-form
 import { ImageForm } from "./_components/image-form";
 import { CampaignActions } from "./_components/campaign-actions";
 import { FundForm } from "./_components/fund-form";
+import { CategoryForm } from "./_components/category-form";
 
 const ChapterIdPage = async({
   params
@@ -32,6 +33,13 @@ const ChapterIdPage = async({
     },
   });
 
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+
 
   if(!campaign) {
     return redirect("/");
@@ -42,17 +50,15 @@ const ChapterIdPage = async({
     campaign.description,
     // campaign.imageUrl,
     campaign.fund,
-    // campaign.isPublished,
-
+    campaign.categoryId,
   ];
-
+  
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
 
   const completionText = `(${completedFields}/${totalFields})`;
 
   const isComplete = requiredFields.every(Boolean);
-  console.log(isComplete)
 
   return ( 
     <>
@@ -109,7 +115,15 @@ const ChapterIdPage = async({
                 <FundForm
                   initialData={campaign}
                   campaignId={campaign.id}
-              />
+                />
+                <CategoryForm
+                  initialData={campaign}
+                  campaignId={campaign.id}
+                  options={categories.map((category) => ({
+                    label: category.name,
+                   value: category.id,
+                 }))}
+                />
             </div>
           </div>
           <div>
