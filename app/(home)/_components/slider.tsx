@@ -10,12 +10,28 @@ import {
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { useRef, useState, memo } from "react";
+import { useRef, useState, memo, useEffect } from "react";
+import { type CarouselApi } from "@/components/ui/carousel";
 
 const Slider = memo(() => {
+  const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    const onSelect = () => setCurrent(api.selectedScrollSnap() + 1);
+    api.on("select", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
 
   const isActive = (index: number) => index === current - 1;
 
@@ -33,6 +49,7 @@ const Slider = memo(() => {
       </section>
 
       <Carousel
+        setApi={setApi}
         className="relative w-full"
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
@@ -41,10 +58,9 @@ const Slider = memo(() => {
         <CarouselContent className="relative">
           {["sliderImg3", "sliderImg1", "sliderImg2"].map((img, index) => (
             <CarouselItem key={index} className="relative px-2">
-              {" "}
               <AspectRatio
                 ratio={16 / 9}
-                className="overflow-hidden rounded-lg shadow-lg transform scale-90" // Scaled down images slightly
+                className="overflow-hidden rounded-lg shadow-lg transform scale-90"
               >
                 <Image
                   src={`/assets/slider/${img}.jpg`}
@@ -78,6 +94,7 @@ const Slider = memo(() => {
               className={`h-4 w-4 rounded-full ${
                 isActive(index) ? "bg-[#37AB87]" : "bg-gray-400"
               } transition-all duration-300`}
+              onClick={() => api?.scrollTo(index)}
             />
           ))}
         </div>
