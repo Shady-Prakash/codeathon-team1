@@ -1,7 +1,15 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { campaigns } from "../../../data/campaigns";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaWhatsapp,
+  FaEnvelope,
+} from "react-icons/fa";
+import { FiLink } from "react-icons/fi";
+import { TbBrandX } from "react-icons/tb"; // X (formerly Twitter) logo
 
 interface Campaign {
   id: string;
@@ -13,11 +21,21 @@ interface Campaign {
 
 export default function CampaignDetails() {
   const { id } = useParams();
+  const [isReadMore, setIsReadMore] = useState(false);
 
   const campaign = useMemo(
     () => campaigns.find((campaign) => campaign.id === id),
     [id]
   );
+
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => alert("Link copied!"))
+      .catch((error) => console.error("Error copying link:", error));
+  };
+
+  const toggleReadMore = () => setIsReadMore(!isReadMore);
 
   if (!campaign)
     return (
@@ -43,9 +61,101 @@ export default function CampaignDetails() {
           className="w-full h-80 object-cover rounded-lg shadow-lg"
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
-          {campaign.description}
+          {isReadMore
+            ? campaign.description
+            : `${campaign.description.slice(0, 200)}...`}{" "}
+          <button
+            onClick={toggleReadMore}
+            className="text-blue-500 hover:underline ml-1"
+          >
+            {isReadMore ? "Read Less" : "Read More"}
+          </button>
         </p>
       </section>
+
+      <section className="mt-6">
+        <div className="flex justify-between items-center">
+          <p className="text-xl font-semibold text-gray-900">
+            Share this campaign:
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name}`
+              )}&url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on X"
+              className="text-[#1DA1F2] hover:text-[#1a8cd8] text-xl"
+            >
+              <TbBrandX />
+            </a>
+
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                window.location.href
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on Facebook"
+              className="text-[#4267B2] hover:text-[#3b5998] text-xl"
+            >
+              <FaFacebookF />
+            </a>
+
+            <a
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+                window.location.href
+              )}&title=${encodeURIComponent(
+                campaign.name
+              )}&summary=${encodeURIComponent(
+                campaign.description
+              )}&source=LinkedIn`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on LinkedIn"
+              className="text-[#0077B5] hover:text-[#006699] text-xl"
+            >
+              <FaLinkedinIn />
+            </a>
+
+            <a
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name} ${window.location.href}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share on WhatsApp"
+              className="text-[#25D366] hover:text-[#25a256] text-xl"
+            >
+              <FaWhatsapp />
+            </a>
+
+            <a
+              href={`mailto:?subject=${encodeURIComponent(
+                `Check out this campaign: ${campaign.name}`
+              )}&body=${encodeURIComponent(
+                `I found this campaign and thought you might be interested in it: ${window.location.href}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Share via Email"
+              className="text-[#EA4335] hover:text-[#d73d32] text-xl"
+            >
+              <FaEnvelope />
+            </a>
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              aria-label="Copy Link"
+              className="text-[#37AB87] hover:text-[#2e8c6c] text-xl"
+            >
+              <FiLink />
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section className="mt-6">
         <p className="text-xl font-semibold text-gray-900 mb-4">
           Select Donation Type
