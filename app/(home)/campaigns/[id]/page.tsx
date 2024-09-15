@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { campaigns } from "../../../data/campaigns";
 import {
@@ -21,7 +21,9 @@ interface Campaign {
 
 export default function CampaignDetails() {
   const { id } = useParams();
+  const router = useRouter();
   const [isReadMore, setIsReadMore] = useState(false);
+  const [donationType, setDonationType] = useState<string | null>(null);
 
   const campaign = useMemo(
     () => campaigns.find((campaign) => campaign.id === id),
@@ -36,6 +38,22 @@ export default function CampaignDetails() {
   };
 
   const toggleReadMore = () => setIsReadMore(!isReadMore);
+
+  const handleDonateNow = () => {
+    if (donationType) {
+      router.push(
+        `/campaigns/${id}/${
+          donationType === "individual"
+            ? "donate-as-individual"
+            : `donate-as-company?campaignName=${encodeURIComponent(
+                campaign.name
+              )}`
+        }`
+      );
+    } else {
+      alert("Please select a donation type.");
+    }
+  };
 
   if (!campaign)
     return (
@@ -166,6 +184,8 @@ export default function CampaignDetails() {
               type="radio"
               name="donation-type"
               value="individual"
+              checked={donationType === "individual"}
+              onChange={(e) => setDonationType(e.target.value)}
               className="h-5 w-5 text-blue-500 border-gray-300 rounded"
             />
             <span className="text-gray-800 text-lg">Donate as Individual</span>
@@ -175,6 +195,8 @@ export default function CampaignDetails() {
               type="radio"
               name="donation-type"
               value="company"
+              checked={donationType === "company"}
+              onChange={(e) => setDonationType(e.target.value)}
               className="h-5 w-5 text-blue-500 border-gray-300 rounded"
             />
             <span className="text-gray-800 text-lg">Donate as Company</span>
@@ -183,6 +205,7 @@ export default function CampaignDetails() {
         <div className="mt-4 text-center">
           <button
             type="button"
+            onClick={handleDonateNow}
             className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full"
           >
             Donate Now
