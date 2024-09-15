@@ -26,7 +26,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#059669] text-white py-10 mt-auto ">
+    <footer className="bg-[#059669] text-white py-10  bottom-0 left-0 w-full">
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
           {/* <p className='text-center md:text-left'>
