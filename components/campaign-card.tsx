@@ -9,7 +9,7 @@ import { CourseProgress } from "@/components/campaign-progress";
 interface CampaignCardProps {
   id: string;
   title: string;
-  imageUrl?: string;
+  // imageUrl?: string;
   fund: number;
   progress: number | null;
   category: string;
@@ -18,7 +18,7 @@ interface CampaignCardProps {
 export const CampaignCard = ({
   id,
   title,
-  imageUrl,
+  // imageUrl,
   fund,
   progress,
   category,
