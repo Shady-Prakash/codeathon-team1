@@ -46,6 +46,8 @@ const CampaignCard: React.FC<CampaignProps> = ({
 const Campaigns: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const campaignsPerPage = 3; 
 
   const uniqueCategories = Array.from(
     new Set(campaigns.map((campaign) => campaign.category))
@@ -58,6 +60,12 @@ const Campaigns: React.FC = () => {
     const matchesCategory = category === "" || campaign.category === category;
     return matchesSearch && matchesCategory;
   });
+
+  const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage);
+  const currentCampaigns = filteredCampaigns.slice(
+    (currentPage - 1) * campaignsPerPage,
+    currentPage * campaignsPerPage
+  );
 
   return (
     <div>
@@ -107,18 +115,41 @@ const Campaigns: React.FC = () => {
           </select>
         </div>
 
-        {filteredCampaigns.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-            {filteredCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign.id}
-                title={campaign.name}
-                body={campaign.description}
-                id={campaign.id}
-                imageSrc={campaign.image}
-                category={campaign.category}
-              />
-            ))}
+        {currentCampaigns.length > 0 ? (
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+              {currentCampaigns.map((campaign) => (
+                <CampaignCard
+                  key={campaign.id}
+                  title={campaign.name}
+                  body={campaign.description}
+                  id={campaign.id}
+                  imageSrc={campaign.image}
+                  category={campaign.category}
+                />
+              ))}
+            </div>
+            <div className="flex justify-between items-center mt-8">
+              <Button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50"
+              >
+                Previous
+              </Button>
+              <span className="text-sm text-gray-600">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50"
+              >
+                Next
+              </Button>
+            </div>
           </div>
         ) : (
           <p className="text-center text-gray-600 mt-10">
