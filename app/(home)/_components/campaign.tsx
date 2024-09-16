@@ -1,30 +1,44 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import Link from "next/link";
-import { campaigns } from "../../data/campaigns";
+import { Campaign, Category } from "@prisma/client";
 
-type CampaignProps = {
+type CampaignWithProgressWithCategory = Campaign & {
+  category: Category | null;
+  campaigns: { id: string }[];
+  progress: number | null;
+};
+
+interface CampaignsListProps {
+  items: CampaignWithProgressWithCategory[];
+}
+
+interface CampaignCardProps {
   id: string;
   title: string;
-  body: string;
-  imageSrc: string;
+  description: string;
+  imageUrl?: string;
+  fund: number;
+  progress: number | null;
   category: string;
 };
 
-const CampaignCard: React.FC<CampaignProps> = ({
+const CampaignCard = ({
   id,
   title,
-  body,
-  imageSrc,
+  description,
+  imageUrl,
+  fund,
   category,
-}) => {
-  const truncatedBody = body.length > 300 ? `${body.slice(0, 300)}...` : body;
+}: CampaignCardProps) => {
+  const truncatedBody = description.length > 300 ? `${description.slice(0, 300)}...` : description;
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
       <img
-        src={imageSrc}
+        src={imageUrl}
         alt={title}
         className="w-full h-48 object-cover rounded-t-lg"
       />
@@ -43,26 +57,38 @@ const CampaignCard: React.FC<CampaignProps> = ({
   );
 };
 
-const Campaigns: React.FC = () => {
+const Campaigns = ({
+  items
+ }:CampaignsListProps) => {
+
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 3; // Adjust this number as needed
 
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/campaigns')
+      .then(res => res.json())
+      .then(setData);
+  }, []);
+  console.log(data)
+
   const uniqueCategories = Array.from(
-    new Set(campaigns.map((campaign) => campaign.category))
+    new Set(data&&data.map((campaign) => campaign.category.name))
   );
 
-  const filteredCampaigns = campaigns.filter((campaign) => {
-    const matchesSearch = campaign.name
+  const filteredCampaigns = data&&data.filter((campaign) => {
+    const matchesSearch = campaign.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesCategory = category === "" || campaign.category === category;
+    const matchesCategory = category === "" || campaign.category.name === category;
     return matchesSearch && matchesCategory;
   });
 
-  const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage);
-  const currentCampaigns = filteredCampaigns.slice(
+  const totalPages = Math.ceil(filteredCampaigns?.length / campaignsPerPage);
+  const currentCampaigns = filteredCampaigns&&filteredCampaigns.slice(
     (currentPage - 1) * campaignsPerPage,
     currentPage * campaignsPerPage
   );
@@ -117,17 +143,18 @@ const Campaigns: React.FC = () => {
           </select>
         </div>
 
-        {currentCampaigns.length > 0 ? (
+        {currentCampaigns&&currentCampaigns.length > 0 ? (
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {currentCampaigns.map((campaign) => (
                 <CampaignCard
                   key={campaign.id}
-                  title={campaign.name}
-                  body={campaign.description}
                   id={campaign.id}
-                  imageSrc={campaign.image}
-                  category={campaign.category}
+                  title={campaign.title}
+                  description={campaign.description}
+                  imageUrl={campaign.imageUrl}
+                  fund={campaign.fund}
+                  category={campaign.category.name}
                 />
               ))}
             </div>

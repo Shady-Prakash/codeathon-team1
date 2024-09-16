@@ -4,6 +4,27 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
  
 
+export async function GET(
+  req: Request,
+  { params } : { params: { campaignId: string; } }
+) {
+  try {
+    const campaign = await db.campaign.findUnique({
+      where: {
+        id: params.campaignId,
+      },
+      include: {
+        category: true
+      }
+    });
+
+    return NextResponse.json(campaign);
+  } catch (error) {
+    console.log("[CAMPAIGN_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: { campaignId: string; } }
@@ -14,17 +35,6 @@ export async function DELETE(
       if(!userId) {
         return new NextResponse("Unauthorized", { status: 401 });
       }
-
-      // const ownCampaign = await db.campaign.findUnique({
-      //   where: {
-      //     id: params.campaignId,
-      //     userId,
-      //   }
-      // });
-
-      // if(!ownCampaign) {
-      //   return new NextResponse("Unauthorized", { status: 401 });
-      // }
 
       const campaign = await db.campaign.findUnique({
         where: {
@@ -42,24 +52,6 @@ export async function DELETE(
           id: params.campaignId
         }
       });
-
-      // const publishedCampaigns = await db.campaign.findMany({
-      //   where: {
-      //     id: params.campaignId,
-      //     isPublished: true,
-      //   }
-      // });
-
-      // if(!publishedCampaigns.length) {
-      //   await db.campaign.update({
-      //     where: {
-      //       id: params.campaignId,
-      //     },
-      //     data: {
-      //       isPublished: false,
-      //     }
-      //   });
-      // }
       
       return NextResponse.json(deletedCampaign);
 } catch (error) {
@@ -81,17 +73,6 @@ export async function PATCH(
     if(!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    // const ownCampaign = await db.campaign.findUnique({
-    //   where: {
-    //     id: params.campaignId,
-    //     userId
-    //   }
-    // });
-
-    // if(!ownCampaign) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
 
     const campaign = await db.campaign.update({
       where: {
