@@ -60,7 +60,7 @@ export default function DonateAsCompany() {
             onChange={(e) => {
               const value = e.target.value;
               setCompanyName(value);
-              if (value !== "Other") setNewCompanyName(""); 
+              if (value !== "Other") setNewCompanyName("");
             }}
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
           >
@@ -110,7 +110,6 @@ export default function DonateAsCompany() {
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
-
         <div>
           <label htmlFor="name" className="block text-gray-700">
             Name
