@@ -70,7 +70,7 @@ export default function CampaignDetails() {
 
   if (!data) {
     return (
-      <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+      <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2">
         <h1 className="text-2xl font-semibold text-gray-800">
           Campaign Not Found
         </h1>
@@ -79,7 +79,7 @@ export default function CampaignDetails() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+    <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2">
       <header className="flex flex-col items-start mb-6">
         <h1 className="text-4xl font-extrabold text-gray-900">{data?.name}</h1>
         <p className="text-lg text-gray-600 mt-1">{data?.category?.name}</p>
