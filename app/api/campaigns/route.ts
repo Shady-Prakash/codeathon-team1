@@ -27,3 +27,28 @@ export async function POST(
     return new NextResponse("Internal Error", { status:500 });
   }
 }
+
+export async function GET(
+  req: Request,
+) {
+  try {
+
+    const campaigns = await db.campaign.findMany({
+      where: {
+        isPublished: true,
+      },
+      include: {
+        category: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      }
+    })
+
+    return NextResponse.json(campaigns);
+  } catch (error) {
+    console.log("[CAMPAIGNS]", error);
+    return new NextResponse("Internal Error", { status:500 });
+  }
+}
+
