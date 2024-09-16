@@ -3,9 +3,6 @@ import ReportsPage from '@/app/reports/page';
 
 export default function Home() {
   return (
-    <div>
-      <UserButton afterSignOutUrl='/' />
       <ReportsPage />
-    </div>
   );
 }

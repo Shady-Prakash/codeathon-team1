@@ -13,6 +13,7 @@ import { ImageForm } from "./_components/image-form";
 import { CampaignActions } from "./_components/campaign-actions";
 import { FundForm } from "./_components/fund-form";
 import { CategoryForm } from "./_components/category-form";
+import { CampaignDateForm } from "./_components/campaign-date";
 
 const ChapterIdPage = async({
   params
@@ -33,6 +34,7 @@ const ChapterIdPage = async({
     },
   });
 
+  console.log(campaign)
   const categories = await db.category.findMany({
     orderBy: {
       name: "asc",
@@ -48,8 +50,9 @@ const ChapterIdPage = async({
   const requiredFields = [
     campaign.title,
     campaign.description,
-    // campaign.imageUrl,
+    campaign.imageUrl,
     campaign.fund,
+    campaign.startingDate,
     campaign.categoryId,
   ];
   
@@ -113,6 +116,10 @@ const ChapterIdPage = async({
                   campaignId={params.campaignId}
                 />
                 <FundForm
+                  initialData={campaign}
+                  campaignId={campaign.id}
+                />
+                <CampaignDateForm
                   initialData={campaign}
                   campaignId={campaign.id}
                 />
