@@ -3,7 +3,9 @@
 ## Project Description
 The Big Alliance Donation Website helps users donate to various charity campaigns. It supports both individual and company donations, and administrators can manage campaigns and view reports. The site is designed for mobile and desktop, ensuring accessibility and security with multi-factor authentication and PayPal payments.
 
-![Donation front page](![screenshot-home-page](screenshot-home-page.png))
+![image](https://github.com/user-attachments/assets/99943f25-ff0c-4799-88a1-9046a0159417)
+
+
 
 ## Technologies Used
 - **Next.js**: For fast, responsive frontend.
