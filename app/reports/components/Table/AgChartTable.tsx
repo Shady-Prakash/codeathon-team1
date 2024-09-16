@@ -14,7 +14,6 @@ import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-// Define the row data interface based on mock data
 interface IReport {
   id: string;
   campaign: string;
@@ -25,33 +24,9 @@ interface IReport {
   category: string;
 }
 
-// Define props for custom cell renderers
 interface CellRendererProps extends ICellRendererParams {
   value: string;
 }
-
-// PushComp for custom rendering
-// const PushComp: React.FC<CellRendererProps> = ({ value }) => {
-//   const onAlert = useCallback(() => alert('Push'), []);
-//   return (
-//     <>
-//       <button onClick={onAlert}>Push</button>
-//       {value}
-//     </>
-//   );
-// };
-
-// PullComp for custom rendering (Class-based)
-// class PullComp extends React.Component<CellRendererProps> {
-//   render() {
-//     return (
-//       <>
-//         <button onClick={() => alert('Pull')}>Pull</button>
-//         {this.props.value}
-//       </>
-//     );
-//   }
-// }
 
 // Mock data for local testing
 const mockData: IReport[] = [
@@ -202,12 +177,12 @@ const AgChartTable: React.FC = () => {
     setRowData(mockData);
   }, []);
 
-  // Default column definitions
   const defaultColDef = useMemo<ColDef>(
     () => ({
       resizable: true,
       sortable: true,
       filter: true,
+      cellStyle: { color: 'rgb(3, 105, 161)' },
     }),
     []
   );
@@ -217,21 +192,22 @@ const AgChartTable: React.FC = () => {
     {
       headerName: 'Campaign',
       field: 'campaign',
-      // cellRenderer: PushComp, // Example of using PushComp for 'campaign'
+      filter: 'agTextColumnFilter',
     },
     {
       headerName: 'Donor',
       field: 'donor',
-      cellRenderer: (params: ICellRendererParams) => <>{params.value}</>, // Simply renders the value
+      cellRenderer: (params: ICellRendererParams) => <>{params.value}</>,
     },
     {
       headerName: 'Amount',
       field: 'amount',
-      // cellRenderer: PullComp, // Example of using PullComp for 'amount'
+      filter: 'agNumberColumnFilter',
     },
     {
       headerName: 'Date',
       field: 'date',
+      filter: 'agDateColumnFilter',
     },
     {
       headerName: 'Type',
@@ -244,7 +220,13 @@ const AgChartTable: React.FC = () => {
   ]);
 
   return (
-    <div className='ag-theme-alpine' style={{ height: '600px', width: '100%' }}>
+    <div
+      className='ag-theme-alpine'
+      style={{
+        height: '600px',
+        width: '100%',
+        backgroundColor: 'rgb(241, 250, 254)',
+      }}>
       <AgGridReact<IReport>
         ref={gridRef}
         rowData={rowData}

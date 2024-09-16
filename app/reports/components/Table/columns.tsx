@@ -1,3 +1,4 @@
+//this component at the momet is not integrated
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
@@ -6,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { formatPrice } from '@/lib/format';
 
-// Define columns for the report data
 export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'date',
@@ -64,7 +64,7 @@ export const columns: ColumnDef<any>[] = [
       );
     },
     cell: ({ row }) => {
-      const type = row.getValue('type') as string; // Cast to string
+      const type = row.getValue('type') as string;
       return (
         <Badge className={type === 'Donation' ? 'bg-green-500' : 'bg-red-500'}>
           {type}
@@ -99,7 +99,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount') || '0');
-      return <div>{formatPrice(amount)}</div>; // Ensures amount is formatted with £
+      return <div>{formatPrice(amount)}</div>;
     },
   },
 ];
