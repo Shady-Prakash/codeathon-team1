@@ -5,7 +5,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import 'ag-grid-enterprise'; // Import AG Grid Enterprise for charting
+import 'ag-grid-enterprise';
 
 interface IReport {
   id: string;
@@ -180,7 +180,7 @@ const AgChartTable: React.FC = () => {
   const gridRef = useRef<AgGridReact<IReport>>(null);
   const [rowData, setRowData] = useState<IReport[]>([]);
 
-  // mock data for testing
+  // Mock data for testing
   useEffect(() => {
     setRowData(mockData);
   }, []);
@@ -200,12 +200,14 @@ const AgChartTable: React.FC = () => {
       headerName: 'Campaign',
       field: 'campaign',
       filter: 'agTextColumnFilter',
+      flex: 2,
     },
     {
       headerName: 'Donor Name',
       field: 'donor',
       filter: 'agSetColumnFilter',
       cellRenderer: (params: ICellRendererParams) => <>{params.value}</>,
+      flex: 1,
     },
     {
       headerName: 'Donor Type',
@@ -214,26 +216,31 @@ const AgChartTable: React.FC = () => {
       filterParams: {
         values: ['Company', 'Individual'],
       },
+      flex: 1,
     },
     {
       headerName: 'Amount',
       field: 'amount',
       filter: 'agNumberColumnFilter',
+      flex: 1,
     },
     {
       headerName: 'Date',
       field: 'date',
       filter: 'agDateColumnFilter',
+      flex: 1,
     },
     {
       headerName: 'Type',
       field: 'type',
       filter: 'agTextColumnFilter',
+      flex: 1,
     },
     {
       headerName: 'Category',
       field: 'category',
       filter: 'agTextColumnFilter',
+      flex: 1,
     },
   ]);
 
