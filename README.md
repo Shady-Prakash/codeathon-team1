@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Big Alliance Donation Website
 
-## Getting Started
+## Project Description
+The Big Alliance Donation Website helps users donate to various charity campaigns. It supports both individual and company donations, and administrators can manage campaigns and view reports. The site is designed for mobile and desktop, ensuring accessibility and security with multi-factor authentication and PayPal payments.
 
-First, run the development server:
+![Donation front page](![screenshot-home-page](screenshot-home-page.png))
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Technologies Used
+- **Next.js**: For fast, responsive frontend.
+- **TypeScript**: Ensures type safety and code reliability
+- **Prisma**: For database management.
+- **NextAuth**: For secure authentication.
+- **PayPal**: To handle secure payments.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Challenges and Future Plans
+We worked to ensure user input validation and security (OWASP best practices). Future plans include adding more detailed reports and extending campaign features.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Install and Run the Project
+1. Clone the repository.
+2. Run `yarn install` to install dependencies.
+3. Create `.env` file with your environment variables (e.g., PayPal API keys, database connection).
+4. Run `yarn run dev` to start the development server.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## How to Use the Project
+- For admins: Log in to manage campaigns, view donations, and generate reports. Requires authentication (admin login with multi-factor authentication).
+- For donors: Browse campaigns, donate via PayPal.
