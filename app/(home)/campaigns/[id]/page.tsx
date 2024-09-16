@@ -2,7 +2,8 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState, useCallback, useEffect } from "react";
-// import { campaigns } from "../../../data/campaigns";
+import ReactHtmlParser from 'react-html-parser'
+
 import {
   FaFacebookF,
   FaLinkedinIn,
@@ -37,8 +38,6 @@ export default function CampaignDetails() {
     () => data&&data.find(({camp}) => camp.id === id),
     [id]
   );
-
-  console.log(data)
 
   const handleCopyLink = useCallback(() => {
     navigator.clipboard
@@ -96,8 +95,8 @@ export default function CampaignDetails() {
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
-            ? data.description
-            : `${data.description.slice(0, 200)}...`}
+            ? ReactHtmlParser(data.description)
+            : `${data.description.toString().slice(0, 200)}...`}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"
