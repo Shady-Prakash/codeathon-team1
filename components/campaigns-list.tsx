@@ -22,7 +22,7 @@ export const CampaignsList = ({ items }: CampaignsListProps) => {
               key={item.id}
               id={item.id}
               title={item.title}
-              // imageUrl={item.imageUrl!}
+              imageUrl={item.imageUrl!}
               fund={item.fund!}
               progress={item.progress}
               category={item?.category?.name!}
