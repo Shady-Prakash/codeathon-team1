@@ -11,7 +11,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { FiLink } from "react-icons/fi";
-import { TbBrandX } from "react-icons/tb"; // X (formerly Twitter) logo
+import { TbBrandX } from "react-icons/tb";
 
 interface Campaign {
   id: string;
@@ -34,10 +34,7 @@ export default function CampaignDetails() {
       .then(setData);
   }, [id]);
 
-  const campaign = useMemo(
-    () => data && data.find(({ camp }) => camp.id === id),
-    [id]
-  );
+  const campaign = useMemo(() => data, [data]);
 
   const handleCopyLink = useCallback(() => {
     navigator.clipboard
@@ -56,17 +53,17 @@ export default function CampaignDetails() {
         `/campaigns/${id}/${
           donationType === "individual"
             ? `donate-as-individual?campaignName=${encodeURIComponent(
-                data?.title
+                campaign?.title
               )}`
             : `donate-as-company?campaignName=${encodeURIComponent(
-                data?.title
+                campaign?.title
               )}`
         }`
       );
     } else {
       alert("Please select a donation type.");
     }
-  }, [donationType, id, data?.name, router]);
+  }, [donationType, id, campaign?.title, router]);
 
   if (!data) {
     return (
@@ -81,21 +78,23 @@ export default function CampaignDetails() {
   return (
     <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2">
       <header className="flex flex-col items-start mb-6">
-        <h1 className="text-4xl font-extrabold text-gray-900">{data?.name}</h1>
-        <p className="text-lg text-gray-600 mt-1">{data?.category?.name}</p>
+        <h1 className="text-4xl font-extrabold text-gray-900">
+          {campaign?.title}
+        </h1>
+        <p className="text-lg text-gray-600 mt-1">{campaign?.category?.name}</p>
       </header>
 
       <section className="mb-6">
         <img
-          src={data?.imageUrl}
-          alt={data.title}
+          src={campaign?.imageUrl}
+          alt={campaign.title}
           className="w-full h-80 object-cover rounded-lg shadow-lg"
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
-            ? ReactHtmlParser(data.description)
+            ? ReactHtmlParser(campaign?.description)
             : ReactHtmlParser(
-                `${data.description.toString().slice(0, 200)}...`
+                `${campaign?.description.toString().slice(0, 200)}...`
               )}
           <button
             onClick={toggleReadMore}
@@ -114,7 +113,7 @@ export default function CampaignDetails() {
           <div className="flex flex-wrap gap-4">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `Check out this campaign: ${data.title}`
+                `Check out this campaign: ${campaign.title}`
               )}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -140,9 +139,9 @@ export default function CampaignDetails() {
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
                 window.location.href
               )}&title=${encodeURIComponent(
-                data.title
+                campaign.title
               )}&summary=${encodeURIComponent(
-                data.description
+                campaign.description
               )}&source=LinkedIn`}
               target="_blank"
               rel="noopener noreferrer"
@@ -154,7 +153,7 @@ export default function CampaignDetails() {
 
             <a
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                `Check out this campaign: ${data.title} ${window.location.href}`
+                `Check out this campaign: ${campaign.title} ${window.location.href}`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -166,7 +165,7 @@ export default function CampaignDetails() {
 
             <a
               href={`mailto:?subject=${encodeURIComponent(
-                `Check out this campaign: ${data.title}`
+                `Check out this campaign: ${campaign.title}`
               )}&body=${encodeURIComponent(
                 `I found this campaign and thought you might be interested in it: ${window.location.href}`
               )}`}
