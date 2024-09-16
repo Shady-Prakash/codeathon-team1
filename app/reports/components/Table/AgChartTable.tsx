@@ -5,6 +5,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import 'ag-grid-enterprise'; // Import AG Grid Enterprise for charting
 
 interface IReport {
   id: string;
@@ -235,21 +236,62 @@ const AgChartTable: React.FC = () => {
     },
   ]);
 
+  const onChartClick = () => {
+    if (gridRef.current) {
+      const gridApi = gridRef.current.api;
+      gridApi.createRangeChart({
+        chartType: 'column',
+        cellRange: {
+          columns: ['campaign', 'amount'],
+        },
+        chartOptions: {
+          title: {
+            text: 'Donation Amount by Campaign',
+          },
+          series: [
+            {
+              xKey: 'campaign',
+              yKey: 'amount',
+              yName: 'Amount',
+            },
+          ],
+        },
+      });
+    }
+  };
+
   return (
-    <div
-      className='ag-theme-alpine'
-      style={{
-        height: '600px',
-        width: '100%',
-        backgroundColor: 'rgb(241, 250, 254)',
-      }}>
-      <AgGridReact<IReport>
-        ref={gridRef}
-        rowData={rowData}
-        defaultColDef={defaultColDef}
-        columnDefs={columnDefs}
-        animateRows={true}
-      />
+    <div>
+      <button
+        onClick={onChartClick}
+        style={{
+          marginBottom: '10px',
+          color: 'rgb(3, 105, 161)',
+          backgroundColor: 'white', // Clean, modern background
+          border: '1px solid rgb(3, 105, 161)',
+          borderRadius: '8px', // Rounded corners for a modern feel
+          padding: '10px 20px', // Adds spacing for a better touch target
+          cursor: 'pointer', // Change cursor to pointer on hover
+          transition: 'background-color 0.3s, color 0.3s', // Smooth transitions for hover effect
+        }}>
+        Generate Chart
+      </button>
+      <div
+        className='ag-theme-alpine'
+        style={{
+          height: '600px',
+          width: '100%',
+          backgroundColor: 'rgb(241, 250, 254)',
+        }}>
+        <AgGridReact<IReport>
+          ref={gridRef}
+          rowData={rowData}
+          defaultColDef={defaultColDef}
+          columnDefs={columnDefs}
+          animateRows={true}
+          enableCharts={true} // Enable charting feature
+        />
+      </div>
     </div>
   );
 };
