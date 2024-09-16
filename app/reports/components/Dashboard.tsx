@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
   const [filters, setFilters] = useState<any>({});
 
   const fetchData = async () => {
-    const data = await getReportsData({ page: 1, pageSize: 10, filters }); // Fetch data for the first page
+    const data = await getReportsData({ page: 1, pageSize: 10, filters });
     setReportData(data.items);
 
     const payPalData = await fetchPayPalData();

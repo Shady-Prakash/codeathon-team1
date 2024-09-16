@@ -11,7 +11,7 @@ interface IReport {
   id: string;
   campaign: string;
   donor: string;
-  donorType: 'Company' | 'Individual'; // Add donorType
+  donorType: 'Company' | 'Individual';
   amount: number;
   date: string;
   type: string;
@@ -176,12 +176,11 @@ const mockData: IReport[] = [
   },
 ];
 
-// Main component
 const AgChartTable: React.FC = () => {
   const gridRef = useRef<AgGridReact<IReport>>(null);
   const [rowData, setRowData] = useState<IReport[]>([]);
 
-  // Use mock data for testing
+  // mock data for testing
   useEffect(() => {
     setRowData(mockData);
   }, []);
@@ -196,7 +195,6 @@ const AgChartTable: React.FC = () => {
     []
   );
 
-  // Column definitions based on mock data
   const [columnDefs] = useState<ColDef<IReport>[]>([
     {
       headerName: 'Campaign',
@@ -204,16 +202,17 @@ const AgChartTable: React.FC = () => {
       filter: 'agTextColumnFilter',
     },
     {
-      headerName: 'Donor',
+      headerName: 'Donor Name',
       field: 'donor',
+      filter: 'agSetColumnFilter',
       cellRenderer: (params: ICellRendererParams) => <>{params.value}</>,
     },
     {
-      headerName: 'Donor Type', // New column for donor type
+      headerName: 'Donor Type',
       field: 'donorType',
       filter: 'agSetColumnFilter',
       filterParams: {
-        values: ['Company', 'Individual'], // Provide filter values
+        values: ['Company', 'Individual'],
       },
     },
     {
@@ -229,10 +228,12 @@ const AgChartTable: React.FC = () => {
     {
       headerName: 'Type',
       field: 'type',
+      filter: 'agTextColumnFilter',
     },
     {
       headerName: 'Category',
       field: 'category',
+      filter: 'agTextColumnFilter',
     },
   ]);
 
@@ -267,12 +268,12 @@ const AgChartTable: React.FC = () => {
         style={{
           marginBottom: '10px',
           color: 'rgb(3, 105, 161)',
-          backgroundColor: 'white', // Clean, modern background
+          backgroundColor: 'white',
           border: '1px solid rgb(3, 105, 161)',
-          borderRadius: '8px', // Rounded corners for a modern feel
-          padding: '10px 20px', // Adds spacing for a better touch target
-          cursor: 'pointer', // Change cursor to pointer on hover
-          transition: 'background-color 0.3s, color 0.3s', // Smooth transitions for hover effect
+          borderRadius: '8px',
+          padding: '10px 20px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s, color 0.3s',
         }}>
         Generate Chart
       </button>
@@ -289,7 +290,7 @@ const AgChartTable: React.FC = () => {
           defaultColDef={defaultColDef}
           columnDefs={columnDefs}
           animateRows={true}
-          enableCharts={true} // Enable charting feature
+          enableCharts={true}
         />
       </div>
     </div>
