@@ -1,8 +1,9 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useMemo, useState, useCallback } from "react";
-import { campaigns } from "../../../data/campaigns";
+import { useMemo, useState, useCallback, useEffect } from "react";
+import ReactHtmlParser from "react-html-parser";
+
 import {
   FaFacebookF,
   FaLinkedinIn,
@@ -25,9 +26,16 @@ export default function CampaignDetails() {
   const router = useRouter();
   const [isReadMore, setIsReadMore] = useState(false);
   const [donationType, setDonationType] = useState<string | null>(null);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`/api/campaigns/${id}`)
+      .then((res) => res.json())
+      .then(setData);
+  }, [id]);
 
   const campaign = useMemo(
-    () => campaigns.find((campaign) => campaign.id === id),
+    () => data && data.find(({ camp }) => camp.id === id),
     [id]
   );
 
@@ -48,19 +56,19 @@ export default function CampaignDetails() {
         `/campaigns/${id}/${
           donationType === "individual"
             ? `donate-as-individual?campaignName=${encodeURIComponent(
-                campaign.name
+                data?.title
               )}`
             : `donate-as-company?campaignName=${encodeURIComponent(
-                campaign.name
+                data?.title
               )}`
         }`
       );
     } else {
       alert("Please select a donation type.");
     }
-  }, [donationType, id, campaign.name, router]);
+  }, [donationType, id, data?.name, router]);
 
-  if (!campaign) {
+  if (!data) {
     return (
       <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-semibold text-gray-800">
@@ -73,22 +81,22 @@ export default function CampaignDetails() {
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
       <header className="flex flex-col items-start mb-6">
-        <h1 className="text-4xl font-extrabold text-gray-900">
-          {campaign.name}
-        </h1>
-        <p className="text-lg text-gray-600 mt-1">{campaign.category}</p>
+        <h1 className="text-4xl font-extrabold text-gray-900">{data?.name}</h1>
+        <p className="text-lg text-gray-600 mt-1">{data?.category?.name}</p>
       </header>
 
       <section className="mb-6">
         <img
-          src={campaign.image}
-          alt={campaign.name}
+          src={data?.imageUrl}
+          alt={data.title}
           className="w-full h-80 object-cover rounded-lg shadow-lg"
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
-            ? campaign.description
-            : `${campaign.description.slice(0, 200)}...`}
+            ? ReactHtmlParser(data.description)
+            : ReactHtmlParser(
+                `${data.description.toString().slice(0, 200)}...`
+              )}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"
@@ -106,7 +114,7 @@ export default function CampaignDetails() {
           <div className="flex flex-wrap gap-4">
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `Check out this campaign: ${campaign.name}`
+                `Check out this campaign: ${data.title}`
               )}&url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -132,9 +140,9 @@ export default function CampaignDetails() {
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
                 window.location.href
               )}&title=${encodeURIComponent(
-                campaign.name
+                data.title
               )}&summary=${encodeURIComponent(
-                campaign.description
+                data.description
               )}&source=LinkedIn`}
               target="_blank"
               rel="noopener noreferrer"
@@ -146,7 +154,7 @@ export default function CampaignDetails() {
 
             <a
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                `Check out this campaign: ${campaign.name} ${window.location.href}`
+                `Check out this campaign: ${data.title} ${window.location.href}`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -158,7 +166,7 @@ export default function CampaignDetails() {
 
             <a
               href={`mailto:?subject=${encodeURIComponent(
-                `Check out this campaign: ${campaign.name}`
+                `Check out this campaign: ${data.title}`
               )}&body=${encodeURIComponent(
                 `I found this campaign and thought you might be interested in it: ${window.location.href}`
               )}`}

@@ -1,10 +1,12 @@
-import { UserButton } from '@clerk/nextjs';
 import ReportsPage from '@/app/reports/page';
 
-export default function Home() {
+const AnalyticsPage = () => {
   return (
     <div>
+      Analytics page
       <ReportsPage />
     </div>
   );
-}
+};
+
+export default AnalyticsPage;
