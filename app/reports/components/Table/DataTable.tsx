@@ -1,3 +1,4 @@
+//this component at the momet is not integrated
 import * as React from 'react';
 import {
   ColumnDef,
@@ -22,6 +23,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { PlusCircle } from 'lucide-react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationEllipsis,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,21 +46,31 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
       columnFilters,
+      pagination,
     },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
   });
+
+  React.useEffect(() => {
+    table.setPageIndex(pagination.pageIndex);
+  }, [pagination.pageIndex, table]);
 
   return (
     <div>
@@ -91,7 +111,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -118,21 +138,88 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}>
-          Previous
-        </Button>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}>
-          Next
-        </Button>
+      <div className='py-4'>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href='#'
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (table.getCanPreviousPage()) {
+                    table.previousPage();
+                    setPagination((prev) => ({
+                      ...prev,
+                      pageIndex: table.getState().pagination.pageIndex,
+                    }));
+                  }
+                }}
+                className={
+                  !table.getCanPreviousPage()
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : ''
+                }
+              />
+            </PaginationItem>
+            {table.getPageCount() > 1 && (
+              <>
+                <PaginationItem>
+                  <PaginationLink
+                    href='#'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      table.setPageIndex(0);
+                      setPagination((prev) => ({
+                        ...prev,
+                        pageIndex: 0,
+                      }));
+                    }}>
+                    1
+                  </PaginationLink>
+                </PaginationItem>
+                {table.getPageCount() > 2 && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+                <PaginationItem>
+                  <PaginationLink
+                    href='#'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      table.setPageIndex(table.getPageCount() - 1);
+                      setPagination((prev) => ({
+                        ...prev,
+                        pageIndex: table.getPageCount() - 1,
+                      }));
+                    }}>
+                    {table.getPageCount()}
+                  </PaginationLink>
+                </PaginationItem>
+              </>
+            )}
+            <PaginationItem>
+              <PaginationNext
+                href='#'
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (table.getCanNextPage()) {
+                    table.nextPage();
+                    setPagination((prev) => ({
+                      ...prev,
+                      pageIndex: table.getState().pagination.pageIndex,
+                    }));
+                  }
+                }}
+                className={
+                  !table.getCanNextPage()
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : ''
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

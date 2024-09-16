@@ -9,6 +9,22 @@ import { formatPrice } from '@/lib/format';
 // Define columns for the report data
 export const columns: ColumnDef<any>[] = [
   {
+    accessorKey: 'date',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          Date
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return <div>{new Date(row.getValue('date')).toLocaleDateString()}</div>;
+    },
+  },
+  {
     accessorKey: 'campaign',
     header: ({ column }) => {
       return (
@@ -34,39 +50,7 @@ export const columns: ColumnDef<any>[] = [
       );
     },
   },
-  {
-    accessorKey: 'amount',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Amount
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount') || '0');
-      return <div>{formatPrice(amount)}</div>; // Ensures amount is formatted with £
-    },
-  },
-  {
-    accessorKey: 'date',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Date
-          <ArrowUpDown className='ml-2 h-4 w-4' />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div>{new Date(row.getValue('date')).toLocaleDateString()}</div>;
-    },
-  },
+
   {
     accessorKey: 'type',
     header: ({ column }) => {
@@ -99,6 +83,23 @@ export const columns: ColumnDef<any>[] = [
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
+    },
+  },
+  {
+    accessorKey: 'amount',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          Amount
+          <ArrowUpDown className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue('amount') || '0');
+      return <div>{formatPrice(amount)}</div>; // Ensures amount is formatted with £
     },
   },
 ];
