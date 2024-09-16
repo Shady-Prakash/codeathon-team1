@@ -42,6 +42,7 @@
     "ag-charts-enterprise": "^10.1.0",
     "ag-charts-react": "^10.1.0",
     "ag-grid-community": "^32.1.0",
+    "ag-grid-enterprise": "^32.1.0",
     "ag-grid-react": "^32.1.0",
     "autoprefixer": "10.4.16",
     "axios": "^1.6.3",

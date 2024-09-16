@@ -19,7 +19,6 @@ const ReportsPage: React.FC = () => {
   return (
     <div className='p-4'>
       <Dashboard />
-      {/* Removed the export buttons and their handlers */}
     </div>
   );
 };

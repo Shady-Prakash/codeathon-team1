@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { columns } from './Table/columns';
 import { getReportsData } from '../../api/reports/reports';
 import { fetchPayPalData } from '../../api/paypal/paypal';
-import { BarChartComponent } from './Charts/BarChart';
-import { LineChartComponent } from './Charts/LineChart';
-import Home from './Table/AgChartTable';
+// import { BarChartComponent } from './Charts/BarChart';
+// import { LineChartComponent } from './Charts/LineChart';
+import AgChartTable from './Table/AgChartTable';
 
 const Dashboard: React.FC = () => {
   const [chartData, setChartData] = useState<any>([]);
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
   const [filters, setFilters] = useState<any>({});
 
   const fetchData = async () => {
-    const data = await getReportsData({ page: 1, pageSize: 10, filters }); // Fetch data for the first page
+    const data = await getReportsData({ page: 1, pageSize: 10, filters });
     setReportData(data.items);
 
     const payPalData = await fetchPayPalData();
@@ -35,25 +35,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className='p-4'>
-      <Home />
-
-      {/* Charts Section */}
+      <AgChartTable />
       <div className='my-8'>
-        {/* <h2 className='text-xl font-semibold mb-4'>Charts</h2> */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <div>
-            {/* <h3 className='text-lg font-medium mb-2'>
-              Bar Chart - Donations vs Refunds
-            </h3> */}
-            <BarChartComponent data={chartData} />
-          </div>
-          <div>
-            {/* <h3 className='text-lg font-medium mb-2'>
-              Line Chart - Donations & Refunds
-            </h3> */}
-            <LineChartComponent data={chartData} />
-          </div>
-        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'></div>
       </div>
     </div>
   );

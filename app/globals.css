@@ -137,6 +137,22 @@ body,
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  .ag-theme-alpine .ag-header {
+    background-color: rgb(
+      241,
+      250,
+      254
+    ) !important; /* Header background color */
+  }
+
+  .ag-theme-alpine .ag-header-cell {
+    color: rgb(3, 105, 161) !important; /* Header text color */
+    font-weight: bold; /* Optional: Make header text bold */
+  }
+
+  .ag-theme-alpine .ag-cell {
+    color: rgb(3, 105, 161) !important; /* Cell text color */
+  }
 }
 
 @import '~@uploadthing/react/styles.css';
