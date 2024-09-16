@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { DataTable } from './Table/DataTable';
 import { columns } from './Table/columns';
 import { getReportsData } from '../../api/reports/reports';
 import { fetchPayPalData } from '../../api/paypal/paypal';
 import { BarChartComponent } from './Charts/BarChart';
 import { LineChartComponent } from './Charts/LineChart';
+import Home from './Table/AgChartTable';
 
 const Dashboard: React.FC = () => {
   const [chartData, setChartData] = useState<any>([]);
@@ -35,8 +35,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className='p-4'>
-      {/* Data Table Component */}
-      <DataTable columns={columns} data={reportData} />
+      <Home />
 
       {/* Charts Section */}
       <div className='my-8'>
