@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState, useCallback, useEffect } from "react";
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from "react-html-parser";
 
 import {
   FaFacebookF,
@@ -30,12 +30,12 @@ export default function CampaignDetails() {
 
   useEffect(() => {
     fetch(`/api/campaigns/${id}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setData);
   }, [id]);
 
   const campaign = useMemo(
-    () => data&&data.find(({camp}) => camp.id === id),
+    () => data && data.find(({ camp }) => camp.id === id),
     [id]
   );
 
@@ -81,9 +81,7 @@ export default function CampaignDetails() {
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
       <header className="flex flex-col items-start mb-6">
-        <h1 className="text-4xl font-extrabold text-gray-900">
-          {data?.name}
-        </h1>
+        <h1 className="text-4xl font-extrabold text-gray-900">{data?.name}</h1>
         <p className="text-lg text-gray-600 mt-1">{data?.category?.name}</p>
       </header>
 
@@ -96,7 +94,9 @@ export default function CampaignDetails() {
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
             ? ReactHtmlParser(data.description)
-            : `${data.description.toString().slice(0, 200)}...`}
+            : ReactHtmlParser(
+                `${data.description.toString().slice(0, 200)}...`
+              )}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"
