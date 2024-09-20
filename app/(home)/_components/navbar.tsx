@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 
 const NavBar = () => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(false); // Toggles the mobile menu
   const [prevScrollpos, setPrevScrollpos] = useState(0);
   const [top, setTop] = useState(0);
   const router = useRouter();
@@ -42,13 +42,10 @@ const NavBar = () => {
 
   return (
     <nav
-      className={
-        !state
-          ? `sticky top-${top} bg-white z-10 w-full border-b md:border-0`
-          : 'fixed bg-white z-10 w-full border-b md:border-0'
-      }
+      className={`sticky top-${top} bg-white z-10 w-full border-b md:border-0`}
       style={{ transition: 'top ease-in-out 0.3s' }}>
       <div className='items-center px-4 max-w-screen-2xl mx-auto md:flex md:px-8'>
+        {/* Logo and hamburger menu */}
         <div className='flex items-center justify-between py-3 md:py-5 md:block'>
           <Link href='/'>
             <Image
@@ -66,23 +63,63 @@ const NavBar = () => {
             </button>
           </div>
         </div>
+
+        {/* Full-screen mobile menu */}
         <div
-          className={`flex-1 justify-self-center pb-5 mt-8 md:block md:pb-0 md:mt-0 text-center ${
-            state ? 'block' : 'hidden'
-          }`}>
-          <ul className='justify-center items-center space-y-5 md:flex md:space-x-10 md:space-y-0'>
+          className={`fixed inset-0 bg-white z-20 p-8 flex flex-col items-center justify-center transition-transform duration-300 ease-in-out ${
+            state ? 'translate-x-0' : 'translate-x-full'
+          } md:hidden`}>
+          {/* Close icon (X) placed at the top right corner */}
+          <button
+            className='absolute top-5 right-5 text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border'
+            onClick={() => setState(false)}>
+            <X />
+          </button>
+
+          <ul className='flex flex-col items-center space-y-8'>
             {menus.map((item, idx) => (
-              <li key={idx} className='font-medium text-black relative group'>
+              <li
+                key={idx}
+                className='font-medium text-black text-2xl text-center'>
+                <Link href={item.path} onClick={() => setState(false)}>
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className='mt-8 flex justify-center'>
+            {!userId ? (
+              <Button
+                variant='success'
+                border='rounded'
+                size='lg'
+                onClick={clickHandler}>
+                Sign in
+              </Button>
+            ) : (
+              <Link href='/dashboard'>
+                <Button variant='success' border='rounded' size='lg'>
+                  Dashboard
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* Desktop menu */}
+        <div
+          className={`hidden md:flex flex-1 justify-center items-center space-x-10`}>
+          <ul className='flex space-x-10'>
+            {menus.map((item, idx) => (
+              <li key={idx} className='font-medium text-black'>
                 <Link href={item.path}>{item.title}</Link>
-                <span className='absolute left-0 bottom-0 w-0 h-[2px] bg-[rgb(5_150_105_/var(--tw-bg-opacity))] transition-all group-hover:w-full'></span>
               </li>
             ))}
           </ul>
         </div>
-        <div
-          className={`${
-            state ? 'block text-center' : 'hidden'
-          } md:flex gap-3 items-center`}>
+
+        {/* Desktop buttons */}
+        <div className='hidden md:flex gap-3 items-center'>
           {!userId ? (
             <Button
               variant='success'
