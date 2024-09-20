@@ -10,6 +10,8 @@ import Autoplay from 'embla-carousel-autoplay';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { useRef, useState, memo, useEffect } from 'react';
 import { type CarouselApi } from '@/components/ui/carousel';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button'; // Import the Button component
 
 const Slider = memo(() => {
   const [api, setApi] = useState<CarouselApi>();
@@ -46,26 +48,30 @@ const Slider = memo(() => {
             <CarouselItem key={index} className='relative px-2'>
               <AspectRatio
                 ratio={18 / 9}
-                className='overflow-hidden  transform scale-90 '>
+                className='overflow-hidden transform scale-90'>
                 <Image
                   src={`/assets/slider/${img}.jpg`}
                   alt={`Charity slider image ${index + 1}`}
                   fill
                   className='object-cover'
                 />
-                {/* Black overlay */}
                 <div className='absolute inset-0 bg-black opacity-50'></div>
               </AspectRatio>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className='absolute inset-0 flex flex-col justify-center items-center text-center text-white  p-8'>
+        <div className='absolute inset-0 flex flex-col justify-center items-center text-center text-white p-8'>
           <h2 className='text-4xl font-semibold mb-6'>
             Make an Impact: Your Donation Matters
           </h2>
-          <p className='text-lg leading-relaxed max-w-2xl'>
+          <p className='text-lg leading-relaxed max-w-2xl mb-4'>
             Your support helps us drive meaningful change in our community.
           </p>
+          <Link href='/register'>
+            <Button variant='success' size='lg' border='rounded'>
+              Become a Donor
+            </Button>
+          </Link>
         </div>
 
         <div className='absolute bottom-6 w-full flex justify-center items-center space-x-2'>
