@@ -20,9 +20,21 @@ const Footer = () => {
 
   const navigationLinks = [
     { title: 'Home', path: '/' },
-    { title: 'About Us', path: '/about' },
-    { title: 'Contact', path: '/contact' },
-    { title: 'Privacy Policy', path: '/privacy-policy' },
+    {
+      title: 'About Us',
+      path: 'https://www.thebigalliance.org.uk/about-us',
+      external: true,
+    },
+    {
+      title: 'Stories',
+      path: 'https://www.thebigalliance.org.uk/stories',
+      external: true,
+    },
+    {
+      title: 'Contact',
+      path: 'https://www.thebigalliance.org.uk/contact-us',
+      external: true,
+    },
   ];
 
   return (
@@ -34,14 +46,25 @@ const Footer = () => {
           </p> */}
         </div>
         <div className='flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 mb-6 md:mb-0'>
-          {navigationLinks.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.path}
-              className='font-medium hover:text-gray-400'>
-              {item.title}
-            </Link>
-          ))}
+          {navigationLinks.map((item, idx) =>
+            item.external ? (
+              <a
+                key={idx}
+                href={item.path}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='font-medium hover:text-gray-400'>
+                {item.title}
+              </a>
+            ) : (
+              <Link
+                key={idx}
+                href={item.path}
+                className='font-medium hover:text-gray-400'>
+                {item.title}
+              </Link>
+            )
+          )}
         </div>
         <div className='flex space-x-4 mb-6 md:mb-0'>
           {socialLinks.map((social, idx) => (
@@ -57,7 +80,8 @@ const Footer = () => {
         </div>
         <div className='text-center md:text-right'>
           <p className='text-sm'>
-            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+            &copy; {new Date().getFullYear()} Created for The Big Alliance. All
+            rights reserved.
           </p>
         </div>
       </div>
