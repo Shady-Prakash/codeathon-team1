@@ -115,7 +115,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
               placeholder='Search by title'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className='border p-3 rounded-md w-full text-sm pl-12 focus:border-[#059669] focus:ring-[#059669] transition-all'
+              className='border p-3 rounded-md w-full text-sm pl-12 focus:border-[#37AB87] focus:ring-[#37AB87] transition-all' // Changed focus border color
             />
             <svg
               className='absolute left-3 top-3 h-5 w-5 text-gray-400'
