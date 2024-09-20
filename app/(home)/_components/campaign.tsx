@@ -98,7 +98,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
   return (
     <div>
       <div className='bg-[#059669] text-white text-center py-12'>
-        <h1 className='text-3xl md:text-4xl font-bold mb-2'>Our Compaigns</h1>
+        <h1 className='text-3xl md:text-4xl font-bold mb-2'>Our Campaigns</h1>
       </div>
       <div className='p-6'>
         <div className='flex flex-col md:flex-row md:justify-between mb-8 space-y-4 md:space-y-0 md:space-x-4'>
