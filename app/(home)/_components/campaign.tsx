@@ -65,7 +65,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [category, setCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const campaignsPerPage = 3; // Adjust this number as needed
+  const campaignsPerPage = 3;
 
   const [data, setData] = useState(null);
 
@@ -115,7 +115,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
               placeholder='Search by title'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className='border p-3 rounded-md w-full text-sm pl-12 focus:border-[#37AB87] focus:ring-[#37AB87] transition-all' // Changed focus border color
+              className='border p-3 rounded-md w-full text-sm pl-12 focus:border-[#37AB87] focus:ring-[#37AB87] transition-all'
             />
             <svg
               className='absolute left-3 top-3 h-5 w-5 text-gray-400'
