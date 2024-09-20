@@ -38,12 +38,8 @@ const CampaignCard = ({
     description.length > 300 ? `${description.slice(0, 300)}...` : description;
 
   return (
-    <div className='bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl'>
-      <img
-        src={imageUrl}
-        alt={title}
-        className='w-full h-48 object-cover rounded-t-lg'
-      />
+    <div className='bg-white border overflow-hidden'>
+      <img src={imageUrl} alt={title} className='w-full h-48 object-cover ' />
       <div className='p-4 flex flex-col'>
         <h3 className='text-lg font-semibold text-gray-900 mb-2'>{title}</h3>
         <p className='text-gray-700 text-sm flex-1'>
@@ -103,9 +99,6 @@ const Campaigns = ({ items }: CampaignsListProps) => {
     <div>
       <div className='bg-[#059669] text-white text-center py-12'>
         <h1 className='text-3xl md:text-4xl font-bold mb-2'>Our Compaigns</h1>
-        {/* <p className='text-base md:text-lg'>
-          People in crisis need your help. Your donation will change lives.
-        </p> */}
       </div>
       <div className='p-6'>
         <div className='flex flex-col md:flex-row md:justify-between mb-8 space-y-4 md:space-y-0 md:space-x-4'>
@@ -162,20 +155,28 @@ const Campaigns = ({ items }: CampaignsListProps) => {
             </div>
             <div className='flex justify-between items-center mt-8'>
               <Button
+                variant='success'
+                border='rounded'
+                size='lg'
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className='bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50'>
+                className='min-w-[120px]'>
                 Previous
               </Button>
+
               <span className='text-sm text-gray-600'>
                 Page {currentPage} of {totalPages}
               </span>
+
               <Button
+                variant='success'
+                border='rounded'
+                size='lg'
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                className='bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#037f57] focus:ring-opacity-50'>
+                className='min-w-[120px]'>
                 Next
               </Button>
             </div>
