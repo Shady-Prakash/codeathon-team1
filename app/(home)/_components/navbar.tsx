@@ -1,11 +1,11 @@
-"use client";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
+'use client';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@clerk/nextjs';
 
 const NavBar = () => {
   const [state, setState] = useState(false);
@@ -24,20 +24,20 @@ const NavBar = () => {
       }
       setPrevScrollpos(currentScrollPos);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScrollpos]);
 
   const menus = [
-    { title: "Home", path: "/" },
-    { title: "Become a Donor", path: "/register" },
+    { title: 'Home', path: '/' },
+    { title: 'Become a Donor', path: '/register' },
   ];
 
   const clickHandler = () => {
-    router.push("/sign-in");
+    router.push('/sign-in');
   };
 
   return (
@@ -45,62 +45,55 @@ const NavBar = () => {
       className={
         !state
           ? `sticky top-${top} bg-white z-10 w-full border-b md:border-0`
-          : "fixed bg-white z-10 w-full border-b md:border-0"
+          : 'fixed bg-white z-10 w-full border-b md:border-0'
       }
-      style={{ transition: "top ease-in-out 0.3s" }}
-    >
-      <div className="items-center px-4 max-w-screen-2xl mx-auto md:flex md:px-8">
-        <div className="flex items-center justify-between py-3 md:py-5 md:block">
-          <Link href="/">
+      style={{ transition: 'top ease-in-out 0.3s' }}>
+      <div className='items-center px-4 max-w-screen-2xl mx-auto md:flex md:px-8'>
+        <div className='flex items-center justify-between py-3 md:py-5 md:block'>
+          <Link href='/'>
             <Image
-              src="/assets/logo.png"
-              width={70}
-              height={70}
-              alt="Branding logo"
+              src='/assets/logo.png'
+              width={50}
+              height={50}
+              alt='Branding logo'
             />
           </Link>
-          <div className="md:hidden">
+          <div className='md:hidden'>
             <button
-              className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"
-              onClick={() => setState(!state)}
-            >
+              className='text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border'
+              onClick={() => setState(!state)}>
               {!state ? <Menu /> : <X />}
             </button>
           </div>
         </div>
         <div
           className={`flex-1 justify-self-center pb-5 mt-8 md:block md:pb-0 md:mt-0 text-center ${
-            state ? "block" : "hidden"
-          }`}
-        >
-          <ul className="justify-center items-center space-y-5 md:flex md:space-x-10 md:space-y-0">
+            state ? 'block' : 'hidden'
+          }`}>
+          <ul className='justify-center items-center space-y-5 md:flex md:space-x-10 md:space-y-0'>
             {menus.map((item, idx) => (
-              <li
-                key={idx}
-                className="font-medium text-black hover:text-indigo-600"
-              >
+              <li key={idx} className='font-medium text-black relative group'>
                 <Link href={item.path}>{item.title}</Link>
+                <span className='absolute left-0 bottom-0 w-0 h-[2px] bg-[rgb(5_150_105_/var(--tw-bg-opacity))] transition-all group-hover:w-full'></span>
               </li>
             ))}
           </ul>
         </div>
         <div
           className={`${
-            state ? "block text-center" : "hidden"
-          } md:flex gap-3 items-center`}
-        >
+            state ? 'block text-center' : 'hidden'
+          } md:flex gap-3 items-center`}>
           {!userId ? (
             <Button
-              variant="success"
-              border="rounded"
-              size="lg"
-              onClick={clickHandler}
-            >
+              variant='success'
+              border='rounded'
+              size='lg'
+              onClick={clickHandler}>
               Sign in
             </Button>
           ) : (
-            <Link href="/dashboard">
-              <Button variant="success" border="rounded" size="lg">
+            <Link href='/dashboard'>
+              <Button variant='success' border='rounded' size='lg'>
                 Dashboard
               </Button>
             </Link>
