@@ -1,15 +1,15 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ToastProvider } from "@/components/providers/toaster-provider";
-import { ConfettiProvider } from "@/components/providers/confetti-provider";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ToastProvider } from '@/components/providers/toaster-provider';
+import { ConfettiProvider } from '@/components/providers/confetti-provider';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "BIG Alliance",
-  description: "UK based Charity app",
+  title: 'BIG Alliance',
+  description: 'UK based Charity app',
 };
 
 export default function RootLayout({
@@ -19,8 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
+      <html lang='en'>
+        <body className={`${inter.className} flex flex-col min-h-screen`}>
           <ConfettiProvider />
           <ToastProvider />
           {children}
