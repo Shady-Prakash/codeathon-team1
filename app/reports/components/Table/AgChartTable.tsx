@@ -229,6 +229,14 @@ const AgChartTable: React.FC = () => {
       field: 'date',
       filter: 'agDateColumnFilter',
       flex: 1,
+      filterParams: {
+        comparator: (dateA, dateB) => {
+          // Ensure consistent date formatting
+          const dateAFormatted = new Date(dateA);
+          const dateBFormatted = new Date(dateB);
+          return dateAFormatted.getTime() - dateBFormatted.getTime();
+        },
+      },
     },
     {
       headerName: 'Type',
