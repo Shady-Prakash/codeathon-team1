@@ -2,6 +2,12 @@
 import { useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaPaypal } from "react-icons/fa";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+const Message = ({ content }) => {
+  return <p>{content}</p>;
+};
+// M
 
 export default function DonateAsIndividual() {
   const [email, setEmail] = useState<string>("");
@@ -27,6 +33,15 @@ export default function DonateAsIndividual() {
     },
     [agreed, isRecurring]
   );
+
+  const [message, setMessage] = useState("");
+
+  const initialOptions = {
+    "client-id": "test",
+    "enable-funding": "paylater,venmo,card",
+    "disable-funding": "",
+      "data-sdk-integration-source": "integrationbuilder_sc",
+  };
 
   return (
     <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
@@ -128,6 +143,13 @@ export default function DonateAsIndividual() {
         </div>
 
         <div>
+          <label>
+            Fund
+          </label>
+          <input type="number" value="10"/>
+        </div>
+
+        <div>
           <label className="inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -145,12 +167,104 @@ export default function DonateAsIndividual() {
           </label>
         </div>
 
-        <button
+        {/* <button
           type="submit"
           className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-full rounded-full flex items-center justify-center"
         >
           Donate Now <FaPaypal className="ml-2 text-xl" />
-        </button>
+        </button> */}
+
+
+<PayPalScriptProvider options={initialOptions}>
+          <PayPalButtons
+            style={{
+              shape: "rect",
+              layout: "vertical",
+            }}
+            createOrder={async () => {
+              try {
+                const response = await fetch("/api/paypal/orders", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  // use the "body" param to optionally pass additional order information
+                  // like product ids and quantities
+                  body: JSON.stringify({
+                      currency_code: "USD",
+                      value: "5.00",
+                  }),
+                });
+                console.log(response)
+                const orderData = await response.json();
+                if (orderData.id) {
+                  return orderData.id;
+                } else {
+                  const errorDetail = orderData?.details?.[0];
+                  const errorMessage = errorDetail
+                    ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                    : JSON.stringify(orderData);
+
+                  throw new Error(errorMessage);
+                }
+              } catch (error) {
+                console.error(error);
+                setMessage(`Could not initiate PayPal Checkout...${error}`);
+              }
+            }}
+            onApprove={async (data, actions) => {
+              try {
+                const response = await fetch(
+                  `/api/paypal/orders/${data.orderID}/capture`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+
+                const orderData = await response.json();
+                // Three cases to handle:
+                //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                //   (2) Other non-recoverable errors -> Show a failure message
+                //   (3) Successful transaction -> Show confirmation or thank you message
+
+                const errorDetail = orderData?.details?.[0];
+
+                if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+                  // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                  // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                  return actions.restart();
+                } else if (errorDetail) {
+                  // (2) Other non-recoverable errors -> Show a failure message
+                  throw new Error(
+                    `${errorDetail.description} (${orderData.debug_id})`
+                  );
+                } else {
+                  // (3) Successful transaction -> Show confirmation or thank you message
+                  // Or go to another URL:  actions.redirect('thank_you.html');
+                  const transaction =
+                    orderData.purchase_units[0].payments.captures[0];
+                  setMessage(
+                    `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
+                  );
+                  console.log(
+                    "Capture result",
+                    orderData,
+                    JSON.stringify(orderData, null, 2)
+                  );
+                }
+              } catch (error) {
+                console.error(error);
+                setMessage(
+                  `Sorry, your transaction could not be processed...${error}`
+                );
+              }
+            }}
+          />
+        </PayPalScriptProvider>
+        <Message content={message} />
       </form>
     </div>
   );
