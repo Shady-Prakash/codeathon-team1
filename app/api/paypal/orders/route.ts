@@ -1,4 +1,5 @@
-import { createOrder } from "@/lib/paypal";
+import { db } from "@/lib/db";
+import { createOrder, transactions } from "@/lib/paypal";
 
 export const POST = async (req) => {
   console.log("Request = ", await req);
@@ -9,6 +10,13 @@ export const POST = async (req) => {
     console.log("Cart = ", cart);
 
     const { jsonResponse, httpStatusCode } = await createOrder(cart);
+    console.log("ss", jsonResponse.id)
+    await db.transaction.create({
+      data: {
+        orderId: jsonResponse.id,
+        status: jsonResponse.status,
+      },
+    })
 
     return new Response(JSON.stringify(jsonResponse), {
       status: httpStatusCode,

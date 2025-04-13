@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaPaypal } from "react-icons/fa";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import toast from "react-hot-toast";
 
 const Message = ({ content }) => {
   return <p>{content}</p>;
@@ -39,8 +40,8 @@ export default function DonateAsIndividual() {
   const initialOptions = {
     "client-id": "test",
     "enable-funding": "paylater,venmo,card",
-    "disable-funding": "",
-      "data-sdk-integration-source": "integrationbuilder_sc",
+    "disable-funding": "card",
+    "data-sdk-integration-source": "integrationbuilder_sc",
   };
 
   return (
@@ -180,6 +181,7 @@ export default function DonateAsIndividual() {
             style={{
               shape: "rect",
               layout: "vertical",
+              color: "blue"
             }}
             createOrder={async () => {
               try {
@@ -191,11 +193,10 @@ export default function DonateAsIndividual() {
                   // use the "body" param to optionally pass additional order information
                   // like product ids and quantities
                   body: JSON.stringify({
-                      currency_code: "USD",
-                      value: "5.00",
+                        currency_code: "USD",
+                        value: "5.00",
                   }),
                 });
-                console.log(response)
                 const orderData = await response.json();
                 if (orderData.id) {
                   return orderData.id;
@@ -254,12 +255,21 @@ export default function DonateAsIndividual() {
                     orderData,
                     JSON.stringify(orderData, null, 2)
                   );
+                  // toast.success("Transaction completed successfully!")
+                  // router.push("/")
                 }
               } catch (error) {
                 console.error(error);
                 setMessage(
                   `Sorry, your transaction could not be processed...${error}`
                 );
+              }
+            }}
+            onCancel={async () => {
+              try {
+                toast.error("Cancelled transaction!")
+              } catch (error) {
+                console.log(error)
               }
             }}
           />

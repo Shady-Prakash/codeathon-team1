@@ -92,7 +92,7 @@ const captureOrder = async (orderID) => {
       // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
       // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
       // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-    },
+    }
   });
 
   return handleResponse(response);
@@ -101,6 +101,7 @@ const captureOrder = async (orderID) => {
 async function handleResponse(response) {
   try {
     const jsonResponse = await response.json();
+    
     return {
       jsonResponse,
       httpStatusCode: response.status,
