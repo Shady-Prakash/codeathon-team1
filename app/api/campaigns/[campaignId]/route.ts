@@ -4,10 +4,8 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
  
 
-export async function GET(
-  req: Request,
-  { params } : { params: { campaignId: string; } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ campaignId: string; }> }) {
+  const params = await props.params;
   try {
     const campaign = await db.campaign.findUnique({
       where: {
@@ -25,10 +23,8 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { campaignId: string; } }
-) {
+export async function DELETE(req: Request, props: { params: Promise<{ campaignId: string; }> }) {
+  const params = await props.params;
   try {
       const { userId } = auth();
       console.log(auth())
@@ -58,13 +54,10 @@ export async function DELETE(
   console.log("[CHAMPAIGN_ID_DELETE]", error);
   return new NextResponse("Internal Error", { status: 500 });
 }
-
 }
 
-export async function PATCH(
-  req: Request,
-  { params } : { params: { campaignId: string; } }
-) {
+export async function PATCH(req: Request, props: { params: Promise<{ campaignId: string; }> }) {
+  const params = await props.params;
   try {
     const { userId } = auth();
     const {isPublished, ...values} = await req.json();

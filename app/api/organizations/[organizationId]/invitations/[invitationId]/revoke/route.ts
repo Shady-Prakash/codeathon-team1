@@ -3,8 +3,9 @@ import { NextResponse } from 'next/server'
 
 export async function POST(
   req: Request,
-  { params }:{ params: { organizationId: string, invitationId: string } }
+  props:{ params: Promise<{ organizationId: string, invitationId: string }> }
 ) {
+  const params = await props.params;
   try {
     const { userId } = auth();
 

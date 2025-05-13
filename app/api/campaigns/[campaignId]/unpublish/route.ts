@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 
-export async function PATCH(
-  req: Request,
-  { params } : { params: { campaignId: string } }
-) {
+export async function PATCH(req: Request, props: { params: Promise<{ campaignId: string }> }) {
+  const params = await props.params;
   try {
     const { userId } = auth();
 

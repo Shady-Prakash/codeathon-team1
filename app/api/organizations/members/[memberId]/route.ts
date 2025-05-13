@@ -6,8 +6,9 @@ import { db } from "@/lib/db";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { organizationId: string; memberId: string } }
+  props: { params: Promise<{ organizationId: string; memberId: string }> }
 ) {
+  const params = await props.params;
   try {
       const { userId } = auth();
 
@@ -83,13 +84,13 @@ export async function DELETE(
   console.log("[CHAPTER_ID_DELETE]", error);
   return new NextResponse("Internal Error", { status: 500 });
 }
-
 }
 
 export async function PATCH(
   req: Request,
-  { params } : { params: { courseId: string; chapterId: string } }
+  props: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
+  const params = await props.params;
   try {
     const { userId } = auth();
     const {isPublished, ...values} = await req.json();

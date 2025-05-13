@@ -89,5 +89,3 @@ body,
     box-shadow: 0 0 0 2px rgba(55, 171, 135, 0.5); /* Optional: add a shadow for better visibility */
   }
 }
-
-@import '~@uploadthing/react/styles.css';

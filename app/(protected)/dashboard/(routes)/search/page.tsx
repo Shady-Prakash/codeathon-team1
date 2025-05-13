@@ -9,15 +9,14 @@ import { CampaignsList } from "@/components/campaigns-list";
 import { Categories } from "./_components/categories";
 
 interface SearchPageProps {
-  searchParams: {
+  searchParams: Promise<{
     title: string;
     categoryId: string;
-  }
+  }>
 }
 
-const SearchPage = async ({
-  searchParams
-}: SearchPageProps) => {
+const SearchPage = async (props: SearchPageProps) => {
+  const searchParams = await props.searchParams;
   const { userId } = auth();
 
   if (!userId) {

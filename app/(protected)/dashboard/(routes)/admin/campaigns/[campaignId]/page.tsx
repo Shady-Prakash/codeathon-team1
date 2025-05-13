@@ -14,15 +14,16 @@ import { CampaignActions } from "./_components/campaign-actions";
 import { FundForm } from "./_components/fund-form";
 import { CategoryForm } from "./_components/category-form";
 
-const ChapterIdPage = async({
-  params
-}: {
-  params: { campaignId: string }
-}) => {
+const ChapterIdPage = async (
+  props: {
+    params: Promise<{ campaignId: string }>
+  }
+) => {
+  const params = await props.params;
   const { userId } = auth();
 
 
-  if(!userId) {
+  if (!userId) {
     return redirect("/");
   }
 
@@ -41,18 +42,18 @@ const ChapterIdPage = async({
 
 
 
-  if(!campaign) {
+  if (!campaign) {
     return redirect("/");
   }
 
   const requiredFields = [
     campaign.title,
     campaign.description,
-    // campaign.imageUrl,
+    campaign.imageUrl,
     campaign.fund,
     campaign.categoryId,
   ];
-  
+
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
 
@@ -60,14 +61,14 @@ const ChapterIdPage = async({
 
   const isComplete = requiredFields.every(Boolean);
 
-  return ( 
+  return (
     <>
-    {!campaign.isPublished && (
-      <Banner
-        variant="warning"
-        label="This campaign is unpublished. It will not be visible in the campaign"
-      />
-    )}
+      {!campaign.isPublished && (
+        <Banner
+          variant="warning"
+          label="This campaign is unpublished. It will not be visible in the campaign"
+        />
+      )}
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="w-full">
@@ -75,7 +76,7 @@ const ChapterIdPage = async({
               href={`/dashboard/admin/campaigns`}
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
-              <ArrowLeft className="h-4 w-4 mr-2"/>
+              <ArrowLeft className="h-4 w-4 mr-2" />
               Back to campaign setup
             </Link>
             <div className="flex items-center justify-between w-full">
@@ -94,41 +95,41 @@ const ChapterIdPage = async({
               />
             </div>
           </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-            <div className="space-y-4">
-              <div>
-                <div className="flex items-center gap-x-2">
-                  <IconBadge icon={LayoutDashboard}/>
-                  <h2 className="text-xl">
-                    Customize your campaign
-                  </h2>
-                </div>
-                <CampaignTitleForm
-                  initialData={campaign}
-                  campaignId={params.campaignId}
-                />
-                <CampaignDescriptionForm
-                  initialData={campaign}
-                  campaignId={params.campaignId}
-                />
-                <FundForm
-                  initialData={campaign}
-                  campaignId={campaign.id}
-                />
-                <CategoryForm
-                  initialData={campaign}
-                  campaignId={campaign.id}
-                  options={categories.map((category) => ({
-                    label: category.name,
-                   value: category.id,
-                 }))}
-                />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+          <div className="space-y-4">
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={LayoutDashboard} />
+                <h2 className="text-xl">
+                  Customize your campaign
+                </h2>
+              </div>
+              <CampaignTitleForm
+                initialData={campaign}
+                campaignId={params.campaignId}
+              />
+              <CampaignDescriptionForm
+                initialData={campaign}
+                campaignId={params.campaignId}
+              />
+              <FundForm
+                initialData={campaign}
+                campaignId={campaign.id}
+              />
+              <CategoryForm
+                initialData={campaign}
+                campaignId={campaign.id}
+                options={categories.map((category) => ({
+                  label: category.name,
+                  value: category.id,
+                }))}
+              />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={Image}/>
+              <IconBadge icon={Image} />
               <h2 className="text-xl">
                 Add an image
               </h2>
@@ -141,7 +142,7 @@ const ChapterIdPage = async({
         </div>
       </div>
     </>
-   );
+  );
 }
- 
+
 export default ChapterIdPage;

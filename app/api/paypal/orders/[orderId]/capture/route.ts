@@ -4,7 +4,8 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 
-export const POST = async (req, { params }) => {
+export const POST = async (req, props) => {
+  const params = await props.params;
   console.log("Capture");
   console.log("Request = ", await req);
   console.log("Params = ", await params);

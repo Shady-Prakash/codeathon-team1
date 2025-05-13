@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -35,8 +35,8 @@
     "@react-google-maps/api": "^2.19.3",
     "@tanstack/react-table": "^8.20.1",
     "@types/node": "20.10.5",
-    "@types/react": "18.2.45",
-    "@types/react-dom": "18.2.18",
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5",
     "@types/react-html-parser": "^2.0.6",
     "@uploadthing/react": "^6.2.2",
     "add": "^2.0.6",
@@ -53,19 +53,19 @@
     "embla-carousel-autoplay": "^8.2.1",
     "embla-carousel-react": "^8.2.1",
     "eslint": "8.56.0",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "15.3.2",
     "lucide-react": "^0.441.0",
-    "next": "^14.2.11",
+    "next": "15.3.2",
     "postcss": "8.4.32",
     "query-string": "^9.1.0",
-    "react": "18.2.0",
+    "react": "19.1.0",
     "react-confetti": "^6.1.0",
-    "react-dom": "18.2.0",
+    "react-dom": "19.1.0",
     "react-hook-form": "^7.49.2",
     "react-hot-toast": "^2.4.1",
     "react-html-parser": "^2.0.2",
     "react-icons": "^5.2.1",
-    "react-quill": "^2.0.0",
+    "react-quill-new": "^3.4.6",
     "recharts": "^2.12.7",
     "shadcn-ui": "^0.2.3",
     "stripe": "^16.8.0",
@@ -81,5 +81,9 @@
   },
   "devDependencies": {
     "prisma": "^5.7.1"
+  },
+  "overrides": {
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5"
   }
 }

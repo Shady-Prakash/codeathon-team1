@@ -8,11 +8,12 @@ import { Banner } from "@/components/banner";
 
 import { TitleForm } from "./_components/title-form";
 
-const OrganizationIdPage = async ({
-  params
-}: {
-  params: { organizationId: string }
-}) => {
+const OrganizationIdPage = async (
+  props: {
+    params: Promise<{ organizationId: string }>
+  }
+) => {
+  const params = await props.params;
   const { userId } = auth();
 
   if(!userId) {

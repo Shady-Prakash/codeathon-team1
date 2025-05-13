@@ -17,11 +17,12 @@ import { GooglemapPlaces } from "./_components/googlemap-places";
 // import { ChaptersForm } from "./_components/chapters-form";
 // import { Actions } from "./_components/actions";
 
-const DonorIdPage = async ({
-  params
-}: {
-  params: { donorId: string }
-}) => {
+const DonorIdPage = async (
+  props: {
+    params: Promise<{ donorId: string }>
+  }
+) => {
+  const params = await props.params;
   const { userId } = auth();
 
   if(!userId) {

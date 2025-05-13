@@ -22,7 +22,7 @@ export const CampaignActions = ({
 }: CampaignActionsProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const onClickHanlder = async () => {
     try {
       setIsLoading(true);
@@ -42,7 +42,7 @@ export const CampaignActions = ({
       setIsLoading(false);
     }
   }
-  
+
   const onDelete = async () => {
     try {
       setIsLoading(true);
