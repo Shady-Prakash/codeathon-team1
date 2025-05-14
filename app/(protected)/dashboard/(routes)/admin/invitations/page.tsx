@@ -36,8 +36,8 @@ export const InvitationList = () => {
 
   return (
     <div className="p-6">
-      <DataTable columns={columns} data={invitedUsers!}/>
+      <DataTable columns={columns} data={invitedUsers!} />
     </div>
   )
 }
- export default InvitationList;
+export default InvitationList;

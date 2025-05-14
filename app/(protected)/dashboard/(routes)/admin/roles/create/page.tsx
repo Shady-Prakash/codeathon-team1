@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useRouter } from "next/navigation";
 
 interface InviteMemberProps {
-  email: string | undefined; 
+  email: string | undefined;
   role: OrganizationCustomRoleKey | undefined[];
 }
 
@@ -41,8 +41,8 @@ const formSchema = z.object({
 });
 
 // Form to invite a new member to the organization.
-export const InviteMember = ({ email, role } :InviteMemberProps) => {
-  const {orgRole} = useAuth();
+export const InviteMember = ({ email, role }: InviteMemberProps) => {
+  const { orgRole } = useAuth();
   const { isLoaded, organization, invitations } = useOrganization(OrgInvitationsParams)
   const router = useRouter();
   const [disabled, setDisabled] = useState(false)
@@ -69,13 +69,13 @@ export const InviteMember = ({ email, role } :InviteMemberProps) => {
       role: " ",
     }
   })
-  const {isSubmitting, isValid} = form.formState;
+  const { isSubmitting, isValid } = form.formState;
 
   if (!isLoaded || !organization) {
     return <>Loading</>
   }
 
-  const onSubmit = async(values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await organization.inviteMember({
         emailAddress: values.email,
@@ -83,10 +83,10 @@ export const InviteMember = ({ email, role } :InviteMemberProps) => {
       })
       toast.success("Please check your email to accept invitation");
       router.push('/dashboard/admin/invitations');
-    } catch(err: any) {
-        if (isClerkAPIResponseError(err)) toast.error(err.errors[0].message)
+    } catch (err: any) {
+      if (isClerkAPIResponseError(err)) toast.error(err.errors[0].message)
+    }
   }
-}
 
 
   if (fetchedRoles.length === 0) return null
@@ -99,23 +99,22 @@ export const InviteMember = ({ email, role } :InviteMemberProps) => {
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 mt-8">
+            className="space-y-8 mt-8">
             <FormField
               control={form.control}
               name="email"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input
-                      disabled
                       placeholder="johndoe@gmail.com"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -123,28 +122,28 @@ export const InviteMember = ({ email, role } :InviteMemberProps) => {
             <FormField
               control={form.control}
               name="role"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
-                <FormLabel>Role</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                  {fetchedRoles?.map((roleKey) => (
-                    <SelectItem key={roleKey}value={roleKey} disabled = {orgRole === 'org:admin' && roleKey.includes('org:super_admin')}>
-                      {roleKey === "org:admin" ? "Admin" : roleKey === "org:member" ? "Member" : "Super admin"}
-                    </SelectItem>
-                  ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {fetchedRoles?.map((roleKey) => (
+                        <SelectItem key={roleKey} value={roleKey} disabled={orgRole === 'org:admin' && roleKey.includes('org:super_admin')}>
+                          {roleKey === "org:admin" ? "Admin" : roleKey === "org:member" ? "Member" : "Super admin"}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
               )}
             />
-            <Button type="submit" disabled={!isValid || isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               Invite
             </Button>
           </form>
@@ -156,4 +155,4 @@ export const InviteMember = ({ email, role } :InviteMemberProps) => {
 
 export default InviteMember;
 
-<SelectRole/>
+<SelectRole />

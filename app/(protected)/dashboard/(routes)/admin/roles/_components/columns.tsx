@@ -28,11 +28,11 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    cell: ({row}) => {
+    cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
           <Avatar>
-            <AvatarImage src={row.original.publicUserData?.imageUrl} sizes="sm"/>
+            <AvatarImage src={row.original.publicUserData?.imageUrl} sizes="sm" />
             <AvatarFallback>{row.original.publicUserData?.identifier}</AvatarFallback>
           </Avatar>
           <span>{row.original.publicUserData?.firstName + " " + row.original.publicUserData?.lastName}</span>
@@ -53,7 +53,7 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    cell: ({row }) => {
+    cell: ({ row }) => {
       return row.original.publicUserData?.identifier
     }
   },
@@ -70,7 +70,7 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    cell: ({row }) => {
+    cell: ({ row }) => {
       return row.original.createdAt.toLocaleDateString()
     }
   },
@@ -88,7 +88,7 @@ export const columns: ColumnDef<any>[] = [
       )
     },
     cell: ({ row }) => {
-      return (     
+      return (
         <>
           <SelectRole
             defaultRole={row.original.role}
@@ -108,7 +108,7 @@ export const columns: ColumnDef<any>[] = [
     header: "Action",
     cell: ({ row }) => {
       return (
-      
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <span className="h-4 w-8 p-0">

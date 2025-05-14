@@ -39,8 +39,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const {orgRole} = useAuth()
-  
+  const { orgRole } = useAuth()
+
   const table = useReactTable({
     data,
     columns,
@@ -67,16 +67,16 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        {orgRole !=="org:member" ? 
-        <Link href="/dashboard/admin/roles/create">
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2"/>
-            Invite
-          </Button>
-        </Link>
-        : ""  
-      }
-        
+        {orgRole !== "org:member" ?
+          <Link href="/dashboard/admin/roles/create">
+            <Button>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Invite
+            </Button>
+          </Link>
+          : ""
+        }
+
       </div>
       <div className="rounded-md border">
         <Table>
@@ -89,9 +89,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}
@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

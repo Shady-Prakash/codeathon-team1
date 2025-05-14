@@ -21,8 +21,8 @@ export const Actions = ({
 }: ActionsProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const {orgRole} = useAuth()
-  
+  const { orgRole } = useAuth()
+
   const onDelete = async () => {
     try {
       setIsLoading(true);
@@ -31,8 +31,8 @@ export const Actions = ({
 
       toast.success("User deleted successfully");
       router.push(`/dashboard/admin/roles`);
-
       router.refresh();
+
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -41,10 +41,10 @@ export const Actions = ({
   }
 
   return (
-      <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole ==="org:member" || isLoading}>
-          <Trash className="h-4 w-4" />
-        </Button>
-      </ConfirmModal>
+    <ConfirmModal onConfirm={onDelete}>
+      <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole === "org:member" || isLoading}>
+        <Trash className="h-4 w-4" />
+      </Button>
+    </ConfirmModal>
   )
 }
