@@ -3,7 +3,7 @@ interface getUserInitialsProps {
   lastName: string;
 }
 
-export const getUserInitials = ({firstName = '', lastName = ''}: getUserInitialsProps) => {
+export const getUserInitials = ({ firstName = '', lastName = '' }: getUserInitialsProps) => {
   const firstNameInitial = firstName?.at(0)?.toUpperCase() || ''
   const lastNameInitial = lastName?.at(0)?.toUpperCase() || ''
 

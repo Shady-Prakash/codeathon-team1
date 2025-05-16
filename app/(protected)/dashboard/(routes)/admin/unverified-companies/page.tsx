@@ -6,7 +6,7 @@ import { columns } from "./_components/columns";
 import { db } from "@/lib/db";
 
 const CompaniesPage = async () => {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return redirect("/");

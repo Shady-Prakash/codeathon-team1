@@ -10,7 +10,7 @@ export async function POST(
     const { userId } = auth();
     const { title } = await req.json();
 
-    if(!userId) {
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -24,7 +24,7 @@ export async function POST(
     return NextResponse.json(campaign);
   } catch (error) {
     console.log("[CAMPAIGNS]", error);
-    return new NextResponse("Internal Error", { status:500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
@@ -48,7 +48,7 @@ export async function GET(
     return NextResponse.json(campaigns);
   } catch (error) {
     console.log("[CAMPAIGNS]", error);
-    return new NextResponse("Internal Error", { status:500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
 

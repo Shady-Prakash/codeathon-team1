@@ -10,7 +10,7 @@ type SelectRoleProps = {
 }
 
 const SelectRole = (props: SelectRoleProps) => {
-  const {orgRole} = useAuth();
+  const { orgRole } = useAuth();
   const { fieldName, isDisabled = false, onChange, defaultRole } = props
   const { organization } = useOrganization()
 
@@ -33,19 +33,23 @@ const SelectRole = (props: SelectRoleProps) => {
   if (fetchedRoles.length === 0) return null
 
   return (
+    <div className="block w-full">
       <select
         name={fieldName}
         disabled={orgRole === "org:member" || isDisabled}
         aria-disabled={isDisabled}
         onChange={onChange}
         defaultValue={defaultRole}
+        className="h-10 w-[120px] border bg-white border-gray-300 text-gray-800 text-sm rounded-lg block p-2 focus:outline-none"
       >
         {fetchedRoles?.map((roleKey) => (
-          <option key={roleKey} value={roleKey} disabled = {orgRole === 'org:admin' && roleKey.includes('org:super_admin')}>
+          <option key={roleKey} value={roleKey} disabled={orgRole === 'org:admin' && roleKey.includes('org:super_admin')}>
             {roleKey === "org:admin" ? "Admin" : roleKey === "org:member" ? "Member" : "Super admin"}
           </option>
         ))}
       </select>
+    </div>
+
   )
 }
 

@@ -15,35 +15,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/lib/format";
+import { SortableHeader } from "./sortable-header";
 
 export const columns: ColumnDef<Campaign>[] = [
   {
     accessorKey: "title",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header: ({ column }) => (
+      <SortableHeader column={column} title="Campaign Name" />
+    ),
   },
   {
     accessorKey: "fund",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Fund
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header: ({ column }) => (
+      <SortableHeader column={column} title="fund" />
+
+    ),
     cell: ({ row }) => {
       const fund = parseFloat(row.getValue("fund") || "0");
 
@@ -52,17 +38,9 @@ export const columns: ColumnDef<Campaign>[] = [
   },
   {
     accessorKey: "isPublished",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Published
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header: ({ column }) => (
+      <SortableHeader column={column} title="isPublished" />
+    ),
     cell: ({ row }) => {
       const isPublished = row.getValue("isPublished") || false;
 
@@ -71,9 +49,19 @@ export const columns: ColumnDef<Campaign>[] = [
           "bg-slate-500",
           isPublished && "bg-sky-700"
         )}>
-          {isPublished ? "Published" : "Draft" }
+          {isPublished ? "Published" : "Draft"}
         </Badge>
       )
+    }
+  },
+  {
+    accessorKey: "updatedAt",
+    header: ({ column }) => (
+
+      < SortableHeader column={column} title="Updated At" />
+    ),
+    cell: ({ row }) => {
+      return row.original.updatedAt.toLocaleDateString()
     }
   },
   {
@@ -87,16 +75,16 @@ export const columns: ColumnDef<Campaign>[] = [
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-4 w-8 p-0">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4"/>
+              <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <Link href={`/dashboard/admin/campaigns/${id}`}>
               <DropdownMenuItem>
-                <Pencil className="h-4 w-4 mr-2"/>
+                <Pencil className="h-4 w-4 mr-2" />
                 Edit
               </DropdownMenuItem>
-            </Link>           
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )

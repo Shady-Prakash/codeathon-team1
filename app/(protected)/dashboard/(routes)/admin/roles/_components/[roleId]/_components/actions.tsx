@@ -21,7 +21,7 @@ export const Actions = ({
 }: ActionsProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { orgRole } = useAuth()
+  const { orgRole } = useAuth();
 
   const onDelete = async () => {
     try {
@@ -42,9 +42,9 @@ export const Actions = ({
 
   return (
     <ConfirmModal onConfirm={onDelete}>
-      <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole === "org:member" || isLoading}>
+      <Button variant="destructive" size="sm" disabled={(orgRole === "org:admin" && (role === "org:admin" || role === "org:super_admin")) || (orgRole === "org:member" && (role === "org:member" || role === "org:admin" || role === "org:super_admin")) || (orgRole === "org:super_admin" && role === "org:super_admin") || isLoading}>
         <Trash className="h-4 w-4" />
       </Button>
-    </ConfirmModal>
+    </ConfirmModal >
   )
 }

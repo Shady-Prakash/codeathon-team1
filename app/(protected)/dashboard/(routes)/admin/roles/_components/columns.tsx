@@ -13,6 +13,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import SelectRole from "./select-role";
 import { Actions } from "./[roleId]/_components/actions";
+import toast from "react-hot-toast";
+
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -35,13 +37,13 @@ export const columns: ColumnDef<any>[] = [
             <AvatarImage src={row.original.publicUserData?.imageUrl} sizes="sm" />
             <AvatarFallback>{row.original.publicUserData?.identifier}</AvatarFallback>
           </Avatar>
-          <span>{row.original.publicUserData?.firstName + " " + row.original.publicUserData?.lastName}</span>
+          <span>{row?.original?.publicUserData?.firstName + " " + row?.original?.publicUserData?.lastName}</span>
         </div>
       )
     }
   },
   {
-    accessorKey: "Email",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
@@ -92,12 +94,15 @@ export const columns: ColumnDef<any>[] = [
         <>
           <SelectRole
             defaultRole={row.original.role}
-            onChange={async (e) => {
-              await row.original.update({
-                role: e.target.value as OrganizationCustomRoleKey,
-              })
-              await row.original.revalidate()
-            }}
+            onChange={
+              async (e) => {
+                const response = await row.original.update({
+                  role: e.target.value as OrganizationCustomRoleKey || undefined,
+                })
+                toast.success("Role upated successfully!")
+                return response
+                // await row.original.revalidate()
+              }}
           />
         </>
       )
@@ -108,7 +113,6 @@ export const columns: ColumnDef<any>[] = [
     header: "Action",
     cell: ({ row }) => {
       return (
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <span className="h-4 w-8 p-0">

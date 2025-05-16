@@ -24,15 +24,15 @@ export const Actions = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { orgRole } = useAuth()
-  
+
   const onRevoke = async () => {
     try {
       setIsLoading(true);
 
       await axios.post(`/api/organizations/${organizationId}/invitations/${invitationId}/revoke`);
 
-      toast.success("Invitation revoked successfully");
       router.refresh();
+      toast.success("Invitation revoked successfully");
 
     } catch (error) {
       toast.error("Something went wrong");
@@ -44,7 +44,7 @@ export const Actions = ({
   return (
     <>
       <ConfirmModal onConfirm={onRevoke}>
-        <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole ==="org:member" || isLoading}>
+        <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole === "org:member" || isLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>
