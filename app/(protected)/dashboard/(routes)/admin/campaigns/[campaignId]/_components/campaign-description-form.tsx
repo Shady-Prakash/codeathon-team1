@@ -3,7 +3,7 @@
 import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { Campaign } from "@prisma/client";
@@ -51,7 +51,8 @@ export const CampaignDescriptionForm = ({
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async(values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values)
     try {
       await axios.patch(`/api/campaigns/${campaignId}`, values);
       toast.success("Campaign description updated");
@@ -71,7 +72,7 @@ export const CampaignDescriptionForm = ({
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2"/>
+              <Pencil className="h-4 w-4 mr-2" />
               Edit description
             </>
           )}
@@ -80,7 +81,7 @@ export const CampaignDescriptionForm = ({
       {!isEditing && (
         <div className={cn("text-sm mt-2", !initialData.description && "text-slate-500 italic")}>
           {!initialData.description && "No description"}
-          {initialData.description &&(
+          {initialData.description && (
             <Preview
               value={initialData.description}
             />
@@ -100,7 +101,7 @@ export const CampaignDescriptionForm = ({
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />

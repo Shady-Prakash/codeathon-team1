@@ -1,5 +1,5 @@
 import { Column } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ChevronsUpDown, X } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -33,23 +33,23 @@ export function SortableHeader<TData, TValue>({
             variant="ghost"
             size="sm"
             className={cn(
-              "-ml-3 h-full data-[state=open]:accent capitalize text-sm focus-visible:ring-offset-0 focus-visible:ring-0",
+              "-ml-3 h-full data-[state=open]:bg-accent capitalize text-sm focus-visible:ring-offset-0 focus-visible:ring-0",
               column.getIsSorted() ? "bg-accent" : ""
             )}
           >
             <span>{title}</span>
-            {column.getIsSorted() === "desc" && <ArrowDown className="ml-2 h-3.5 w-3.5" />}
-            {column.getIsSorted() === "asc" && <ArrowUp className="ml-2 h-3.5 w-3.5" />}
+            {column.getIsSorted() === "desc" && <ChevronDown className="ml-2 h-3.5 w-3.5" />}
+            {column.getIsSorted() === "asc" && <ChevronUp className="ml-2 h-3.5 w-3.5" />}
             {!column.getIsSorted() && <ChevronsUpDown className="ml-2 h-3.5 w-3.5" />}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ArrowUp className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            <ChevronUp className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Asc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ArrowDown className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            <ChevronDown className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Desc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.clearSorting()}>

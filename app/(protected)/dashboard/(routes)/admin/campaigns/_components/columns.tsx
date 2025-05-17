@@ -2,7 +2,7 @@
 
 import { Campaign } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { MoreHorizontal, Pencil } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,6 @@ export const columns: ColumnDef<Campaign>[] = [
     ),
     cell: ({ row }) => {
       const isPublished = row.getValue("isPublished") || false;
-
       return (
         <Badge className={cn(
           "bg-slate-500",

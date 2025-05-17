@@ -1,9 +1,10 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { db } from "@/lib/db";
+import DataTableWithTab from "./_components/tab/page";
 
 const CampaignsPage = async () => {
   const { userId } = await auth();
@@ -21,10 +22,12 @@ const CampaignsPage = async () => {
     },
   });
 
+
   return (
-    <div className="p-6">
-      <DataTable columns={columns} data={campaigns} />
-    </div>
+    < div className="p-6" >
+      <DataTableWithTab data={campaigns} />
+      {/* < DataTable columns={columns} data={campaigns} /> */}
+    </div >
   );
 }
 

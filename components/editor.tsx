@@ -22,7 +22,6 @@ export const Editor = ({
         theme="snow"
         value={value}
         onChange={onChange}
-        bounds="self"
       />
     </div>
   );
