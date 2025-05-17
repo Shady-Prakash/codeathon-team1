@@ -8,7 +8,7 @@ import usePageFilter from '@/hooks/use-debounce';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, X } from 'lucide-react';
 
 const DataTableWithTab = ({ data }: any) => {
   const [status, setStatus] = useState("all");
@@ -45,11 +45,12 @@ const DataTableWithTab = ({ data }: any) => {
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter campaign..."
-          className="max-w-sm"
+          className="max-w-xs"
           onClick={handleClearSearchTerm}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <X className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
         <Link href="/dashboard/admin/campaigns/create">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
