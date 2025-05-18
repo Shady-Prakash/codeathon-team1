@@ -8,6 +8,7 @@ import {
   UserCog,
   Building2,
   ShieldQuestion,
+  Send,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -44,8 +45,13 @@ const adminRoutes = [
   },
   {
     icon: UserCog,
-    label: "Manage Roles",
+    label: "User Roles",
     href: "/dashboard/admin/roles",
+  },
+  {
+    icon: Send,
+    label: "User Invitation",
+    href: "/dashboard/admin/invitations",
   },
 ];
 

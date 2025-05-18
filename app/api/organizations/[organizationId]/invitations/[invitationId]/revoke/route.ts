@@ -3,8 +3,9 @@ import { NextResponse } from 'next/server'
 
 export async function POST(
   req: Request,
-  props:{ params: Promise<{ organizationId: string, invitationId: string }> }
+  props: { params: Promise<{ organizationId: string, invitationId: string }> }
 ) {
+  await new Promise((resolve => setTimeout(resolve, 1000)))
   const params = await props.params;
   try {
     const { userId } = auth();
@@ -17,7 +18,7 @@ export async function POST(
       invitationId: params.invitationId,
       requestingUserId: userId,
     })
-    
+
     return NextResponse.json({ message: 'Invitation revoked' })
   } catch (error) {
     console.log(error)

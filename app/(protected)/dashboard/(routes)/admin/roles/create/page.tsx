@@ -87,8 +87,8 @@ export const InviteMember = ({ emailAddress, role }: InviteMemberParams) => {
     startTransition(async () => {
       try {
         await organization.inviteMember({
-          emailAddress: values.email,
-          role: values.role
+          emailAddress: values.email as string,
+          role: values.role as OrganizationCustomRoleKey,
         })
         toast.success("Please check your email to accept invitation");
         router.push('/dashboard/admin/invitations');
@@ -102,14 +102,14 @@ export const InviteMember = ({ emailAddress, role }: InviteMemberParams) => {
   if (fetchedRoles.length === 0) return null
 
   return (
-    <div className="max-w-lg mx-auto mt-6 border bg-slate-100 rounded-md p-6">
+    <div className="flex align-center justify-center max-w-lg mx-auto mt-6 border bg-slate-100 rounded-md px-6 py-12">
       <div>
         <h1 className="text-2xl mb-6">
           Invite new user
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6">
+            className="space-y-6 w-full">
             <FormField
               control={form.control}
               name="email"

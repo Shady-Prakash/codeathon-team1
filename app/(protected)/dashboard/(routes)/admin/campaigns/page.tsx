@@ -6,9 +6,12 @@ import { columns } from "./_components/columns";
 import { db } from "@/lib/db";
 import DataTableWithTab from "./_components/tab/page";
 
-const CampaignsPage = async () => {
-  const { userId } = await auth();
+interface CampaignsProps {
+  searchParams: { [key: string]: string | undefined }
+}
 
+const CampaignsPage = async ({ searchParams }: CampaignsProps) => {
+  const { userId } = await auth();
   if (!userId) {
     return redirect("/");
   }
@@ -21,7 +24,6 @@ const CampaignsPage = async () => {
       createdAt: "desc",
     },
   });
-
 
   return (
     < div className="p-6" >

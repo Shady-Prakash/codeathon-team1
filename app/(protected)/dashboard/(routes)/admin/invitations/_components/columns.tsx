@@ -41,7 +41,7 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    cell: ({row }) => {
+    cell: ({ row }) => {
       return row.original.createdAt.toLocaleDateString()
     }
   },
@@ -58,7 +58,7 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       )
     },
-    cell: ({row }) => {
+    cell: ({ row }) => {
       return row.original.role === "org:admin" ? "Admin" : row.original.role === "org:member" ? "Member" : "Super admin"
     }
   },
