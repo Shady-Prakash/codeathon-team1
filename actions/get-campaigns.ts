@@ -1,13 +1,4 @@
-import { Category, Campaign } from "@prisma/client"
 import { db } from "@/lib/db";
-import { getProgress } from "./get-progress";
-import { campaigns } from "@/app/data/campaigns";
-
-// type CampaignWithProgressWithCategory = Campaign & {
-//   category: Category | null;
-//   camapigns: { id: string }[];
-//   progress: number | null;
-// }
 
 type GetCampaigns = {
   title?: string;
@@ -36,28 +27,6 @@ export const getCampaigns = async ({
     });
 
     return campaigns;
-    // const campaignsWithProgress: CampaignWithProgressWithCategory[] = await Promise.all(
-    //   campaigns.map(async campaign => {
-    //     if (campaign.fund === 0) {
-    //       return {
-    //         ...campaign,
-    //         // progress: null,
-    //       }
-    //     }
-
-    //     // const progressPercentage = await getProgress(userId, course.id);
-
-    //     return {
-    //       ...campaign,
-    //       // progress: progressPercentage,
-    //     };
-
-    //   })
-    // );
-
-
-    // return([campaigns]);
-    // console.log(campaigns)
   } catch (error) {
     console.log("[GET_CAMPAIGNS]", error);
     return [];

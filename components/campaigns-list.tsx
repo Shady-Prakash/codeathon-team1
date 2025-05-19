@@ -4,8 +4,6 @@ import { CampaignCard } from "@/components/campaign-card";
 
 type CampaignWithProgressWithCategory = Campaign & {
   category: Category | null;
-  campaigns: { id: string }[];
-  progress: number | null;
 };
 
 interface CampaignsListProps {
@@ -24,7 +22,6 @@ export const CampaignsList = ({ items }: CampaignsListProps) => {
               title={item.title}
               imageUrl={item.imageUrl!}
               fund={item.fund!}
-              progress={item.progress}
               category={item?.category?.name!}
             />
           </div>

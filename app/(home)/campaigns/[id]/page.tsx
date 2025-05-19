@@ -50,14 +50,13 @@ export default function CampaignDetails() {
   const handleDonateNow = useCallback(() => {
     if (donationType) {
       router.push(
-        `/campaigns/${id}/${
-          donationType === "individual"
-            ? `donate-as-individual?campaignName=${encodeURIComponent(
-                campaign?.title
-              )}`
-            : `donate-as-company?campaignName=${encodeURIComponent(
-                campaign?.title
-              )}`
+        `/campaigns/${id}/${donationType === "individual"
+          ? `donate-as-individual?campaignName=${encodeURIComponent(
+            campaign?.title
+          )}`
+          : `donate-as-company?campaignName=${encodeURIComponent(
+            campaign?.title
+          )}`
         }`
       );
     } else {
@@ -94,8 +93,8 @@ export default function CampaignDetails() {
           {isReadMore
             ? ReactHtmlParser(campaign?.description)
             : ReactHtmlParser(
-                `${campaign?.description.toString().slice(0, 200)}...`
-              )}
+              `${campaign?.description.toString().slice(0, 200)}...`
+            )}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"

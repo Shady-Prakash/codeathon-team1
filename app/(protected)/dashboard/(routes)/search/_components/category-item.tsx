@@ -1,12 +1,13 @@
 "use client";
 
-import qs from "query-string"; 
+import qs from "query-string";
 import { IconType } from "react-icons";
 
-import { 
+import {
   usePathname,
   useRouter,
-  useSearchParams } from "next/navigation";
+  useSearchParams
+} from "next/navigation";
 import { cn } from "@/lib/utils";
 import { title } from "process";
 
@@ -38,20 +39,20 @@ export const CategoryItem = ({
         categoryId: isSelected ? null : value,
       }
     }, { skipNull: true, skipEmptyString: true });
- 
-    router.push(url);
+
+    router.push(url, { scroll: false });
   }
 
   return (
-    <button 
-    onClick={onClick}
-    className={cn(
-      "py-2 px-3 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 hover:border-sky-700 transistion",
-      isSelected && "border-sky-700 bg-sky-200/20 text-sky-800"
-    )}
-    type="button"
+    <button
+      onClick={onClick}
+      className={cn(
+        "py-2 px-3 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 hover:border-sky-700 transistion",
+        isSelected && "border-sky-700 bg-sky-200/20 text-sky-800"
+      )}
+      type="button"
     >
-      {Icon && <Icon size={20}/>}
+      {Icon && <Icon size={20} />}
       <div className="truncate">
         {label}
       </div>

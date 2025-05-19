@@ -27,10 +27,10 @@ export const SearchInput = () => {
           title: debouncedValue,
         },
       },
-      { skipEmptyString: true, skipNull: true }
+      { skipEmptyString: true, skipNull: true },
     );
 
-    router.push(url);
+    router.push(url, { scroll: false });
   }, [debouncedValue, currentCategoryId, router, pathname]);
 
   return (

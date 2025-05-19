@@ -29,11 +29,12 @@ export const Actions = ({
     try {
       setIsLoading(true);
 
-      await fetch(`/api/organizations/${organizationId}/invitations/${invitationId}/revoke`, {
-        method: "POST",
+      await axios.post(`/api/organizations/${organizationId}/invitations/${invitationId}/revoke`, {
+        cache: ""
       });
 
       toast.success("Invitation revoked successfully");
+      router.refresh();
       router.push("/dashboard/admin/invitations");
 
     } catch (error) {
@@ -45,7 +46,7 @@ export const Actions = ({
 
   return (
     <>
-      <ConfirmModal onConfirm={() => { onRevoke(), router.refresh() }}>
+      <ConfirmModal onConfirm={() => { onRevoke() }}>
         <Button size="sm" disabled={orgRole === "org:admin" && role === "org:super_admin" || orgRole === "org:member" || isLoading}>
           <Trash className="h-4 w-4" />
         </Button>

@@ -8,15 +8,16 @@ import { CampaignsList } from "@/components/campaigns-list";
 
 import { Categories } from "./_components/categories";
 
-interface SearchPageProps {
+interface SearchProps {
   searchParams: Promise<{
     title: string;
-    categoryId: string;
+    categoryId?: string;
   }>
 }
 
-const SearchPage = async (props: SearchPageProps) => {
+const SearchPage = async (props: SearchProps) => {
   const searchParams = await props.searchParams;
+
   const { userId } = auth();
 
   if (!userId) {
@@ -28,20 +29,19 @@ const SearchPage = async (props: SearchPageProps) => {
       name: "asc"
     }
   });
-  console.log("categories", categories)
 
   const campaigns = await getCampaigns({
     ...searchParams,
   });
 
-  return ( 
+  return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
-        <SearchInput/>
+        <SearchInput />
       </div>
       <div className="p-6 space-y-4">
         {
-          campaigns.length !==0 &&  
+          campaigns.length !== 0 &&
           <Categories
             items={categories}
           />
@@ -49,7 +49,7 @@ const SearchPage = async (props: SearchPageProps) => {
         <CampaignsList items={campaigns} />
       </div>
     </>
-   );
+  );
 }
- 
+
 export default SearchPage;

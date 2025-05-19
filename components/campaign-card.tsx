@@ -1,14 +1,16 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { formatPrice } from '@/lib/format';
+import { usePathname } from 'next/navigation';
 
 interface CampaignCardProps {
   id: string;
   title: string;
   imageUrl: string;
   fund: number;
-  progress: number | null;
   category: string;
 }
 
@@ -17,11 +19,14 @@ export const CampaignCard = ({
   title,
   imageUrl,
   fund,
-  progress,
   category,
 }: CampaignCardProps) => {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.includes("/dashboard");
+  const url = isAdminRoute ? `/dashboard/admin/campaigns/${id}` : `/campaigns/${id}`
+
   return (
-    <Link href={`/dashboard/admin/campaigns/${id}`}>
+    <Link href={url}>
       <div className='overflow-hidden border p-3 h-full'>
         {' '}
         {/* No hover or rounded classes */}
@@ -41,6 +46,6 @@ export const CampaignCard = ({
           </p>
         </div>
       </div>
-    </Link>
+    </Link >
   );
 };

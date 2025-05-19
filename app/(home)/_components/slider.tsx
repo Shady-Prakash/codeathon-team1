@@ -45,7 +45,7 @@ const Slider = memo(() => {
         onMouseLeave={plugin.current.reset}>
         <CarouselContent className='relative'>
           {['sliderImg3', 'sliderImg1', 'sliderImg2'].map((img, index) => (
-            <CarouselItem key={index} className='relative'>
+            <CarouselItem key={index} className='relative bg-black'>
               <AspectRatio ratio={16 / 9} className='overflow-hidden'>
                 <Image
                   src={`/assets/slider/${img}.jpg`}
@@ -58,7 +58,7 @@ const Slider = memo(() => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className='absolute inset-0 flex flex-col justify-center items-center text-center text-white p-4 md:p-8'>
+        <div className='absolute inset-0 flex flex-col justify-center items-center text-center text-white'>
           <h2 className='text-2xl md:text-4xl font-semibold mb-4 md:mb-6'>
             Make an Impact: Your Donation Matters
           </h2>
@@ -67,7 +67,7 @@ const Slider = memo(() => {
           </p>
           <Link href='/register'>
             <Button variant='success' size='lg' border='rounded'>
-              Become a Donor
+              Get Involved
             </Button>
           </Link>
         </div>
@@ -78,9 +78,8 @@ const Slider = memo(() => {
             <button
               key={index}
               aria-label={`Go to slide ${index + 1}`}
-              className={`h-4 w-4 rounded-full ${
-                isActive(index) ? 'bg-[#37AB87]' : 'bg-gray-400'
-              } transition-all duration-300`}
+              className={`h-4 w-4 rounded-full ${isActive(index) ? 'bg-[#37AB87]' : 'bg-gray-400'
+                } transition-all duration-300`}
               onClick={() => api?.scrollTo(index)}
             />
           ))}
