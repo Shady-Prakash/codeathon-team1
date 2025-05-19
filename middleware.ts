@@ -10,6 +10,7 @@ export default authMiddleware({
     "/register",
     /^\/campaigns\/.*/,
     "/api/donor-registration",
+    "/api/campaigns"
   ],
 });
 

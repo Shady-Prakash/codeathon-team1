@@ -60,8 +60,11 @@ const Campaigns = () => {
       setError("")
 
       try {
-        const response = await fetch("/api/campaigns");
+        const response = await fetch("/api/campaigns", {
+          method: "GET"
+        });
         const data = await response.json();
+        console.log(data)
         setData(data);
 
       } catch {
