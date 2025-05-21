@@ -2,11 +2,20 @@ import Slider from './_components/slider';
 import Campaign from './_components/campaign';
 import About from './_components/about';
 
-const page = () => {
+interface SearchProps {
+  searchParams: Promise<{
+    title: string;
+    categoryId?: string;
+  }>
+}
+
+const page = async (props: SearchProps) => {
+  const searchParams = await props.searchParams;
+
   return (
     <>
       <Slider />
-      <Campaign />
+      <Campaign searchProps={searchParams} />
       <About />
     </>
   );

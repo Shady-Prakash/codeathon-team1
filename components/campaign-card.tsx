@@ -26,8 +26,8 @@ export const CampaignCard = ({
   const url = isAdminRoute ? `/dashboard/admin/campaigns/${id}` : `/campaigns/${id}`
 
   return (
-    <Link href={url}>
-      <div className='overflow-hidden border p-3 h-full'>
+    <Link href={url} >
+      <div className='overflow-hidden border p-3 h-full rounded-lg'>
         {' '}
         {/* No hover or rounded classes */}
         <div className='relative w-full aspect-video overflow-hidden'>
