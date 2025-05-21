@@ -1,30 +1,12 @@
-"use client"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FcEngineering, FcFilmReel, FcMultipleDevices, FcMusic, FcOldTimeCamera, FcSalesPerformance, FcSportsMode } from "react-icons/fc";
-import { Category } from "@prisma/client";
-import { IconType } from "react-icons";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import qs from 'query-string';
+"use client";
 
-type SearchProps = {
-  searchParams: Promise<{
-    title: string;
-    categoryId?: string;
-  }>
-}
+import qs from 'query-string';
+import { Category } from "@prisma/client";
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface CategoriesProps {
   items: Category[];
-}
-
-const iconMap: Record<Category["name"], IconType> = {
-  "Music": FcMusic,
-  "Photography": FcOldTimeCamera,
-  "Fitness": FcSportsMode,
-  "Accounting": FcSalesPerformance,
-  "Computer Science": FcMultipleDevices,
-  "Filming": FcFilmReel,
-  "Engineering": FcEngineering,
 }
 
 const Categories = (

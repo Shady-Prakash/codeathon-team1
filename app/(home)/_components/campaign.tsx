@@ -1,13 +1,9 @@
-// 'use client';
 
-// import { useEffect, useState } from 'react';
-import { Campaign, Category } from '@prisma/client';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { db } from '@/lib/db';
+
 import { getCampaigns } from '@/actions/get-campaigns';
 import { SearchInput } from '@/components/search-input';
 import { CampaignsList } from '@/components/campaigns-list';
-import { db } from '@/lib/db';
 import Categories from '../campaigns/[id]/_components/categories';
 
 interface SearchProps {
@@ -16,9 +12,10 @@ interface SearchProps {
   }>
 }
 
-
 const Campaigns = async ({ searchProps }: SearchProps) => {
+
   const searchParams = await searchProps;
+
   const campaigns = await getCampaigns({
     ...searchParams,
   });
@@ -28,7 +25,6 @@ const Campaigns = async ({ searchProps }: SearchProps) => {
       name: "asc"
     }
   });
-
 
   return (
     <>
